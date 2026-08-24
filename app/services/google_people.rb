@@ -44,11 +44,18 @@ class GooglePeople
 
   def authorization
     unless @authorization
-      @authorization = Google::Auth.get_application_default(scopes)
+      @authorization = Google::Auth::ServiceAccountCredentials.make_creds(
+        json_key_io: StringIO.new(json_key),
+        scope: scopes
+      )
       @authorization.sub = user
       @authorization.fetch_access_token!
     end
     @authorization
+  end
+
+  def json_key
+    @json_key ||= Base64.decode64(ENV.fetch('GOOGLE_APPLICATION_CREDENTIALS_BASE64'))
   end
 
   def scopes
