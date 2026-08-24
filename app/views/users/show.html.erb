@@ -1,1 +1,11 @@
 <h1><%= @user %></h1>
+
+<%
+people = GooglePeople.new(@user.email)
+%>
+<p><%= people.list.count %></p>
+<% people.list.each do |person| %>
+  <%= person.names&.first&.given_name %>
+  <%= person.names&.first&.family_name %>
+  <%= person.email_addresses&.map(&:value)&.join(', ') %><br>
+<% end %>
