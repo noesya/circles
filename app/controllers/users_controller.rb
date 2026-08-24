@@ -5,6 +5,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params.expect(:id))
+    @google_people = GooglePeople.new(@user.email)
   end
-
 end
