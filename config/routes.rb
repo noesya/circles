@@ -3,5 +3,6 @@ Rails.application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks"
   }
   resources :people
+  resources :users, only: [:index, :show]
   root to: "home#index"
 end

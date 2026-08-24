@@ -18,6 +18,7 @@
 #
 class User < ApplicationRecord
   devise  :database_authenticatable,
+          # :registerable,
           :recoverable,
           :rememberable,
           :validatable,
@@ -28,5 +29,9 @@ class User < ApplicationRecord
     User.where(email: auth.uid.downcase).first_or_create do |u|
       u.password = "#{Devise.friendly_token[0,20]}!"
     end
+  end
+
+  def to_s
+    email
   end
 end
