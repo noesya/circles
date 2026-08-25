@@ -24,9 +24,13 @@ class User < ApplicationRecord
           omniauth_providers: [:saml]
 
   def self.from_omniauth(auth)
-    User.where(email: auth.uid.downcase).first_or_create do |u|
+    user = User.where(email: auth.uid.downcase).first_or_initialize do |u|
       u.password = "#{Devise.friendly_token[0,20]}!"
     end
+    user.first_name = auth.info.first_name if auth.info.first_name.present?
+    user.last_name = auth.info.last_name if auth.info.last_name.present?
+    user.save
+    user
   end
 
   def to_s
