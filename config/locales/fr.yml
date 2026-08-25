@@ -1,11 +1,4 @@
 fr:
-  views:
-    pagination:
-      first: "Premier"
-      last: "Dernier"
-      next: "Suivant"
-      previous: "Précédent"
-      truncate: "&hellip;"
   activerecord:
     models:
       interaction: "Interaction"
@@ -19,13 +12,26 @@ fr:
         description: "Description"
         person: "Personne"
       person:
-        first_name: "Prénom"
-        last_name: "Nom"
-        job_title: "Fonction"
         company: "Entreprise"
+        first_name: "Prénom"
+        hidden: "Masqué"
+        job_title: "Fonction"
+        last_name: "Nom"
     values:
       interaction:
         kind:
           call: "Appel"
           calendar_event: "Rendez-vous"
           email: "Email"
+  helpers:
+    submit:
+      create: "Enregistrer"
+      update: "Enregistrer"
+      submit: "Enregistrer"
+  views:
+    pagination:
+      first: "Premier"
+      last: "Dernier"
+      next: "Suivant"
+      previous: "Précédent"
+      truncate: "&hellip;"

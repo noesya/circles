@@ -1,8 +1,8 @@
 class PeopleController < ApplicationController
-  before_action :set_person, only: %i[ show edit update destroy resync ]
+  before_action :set_person, only: %i[ show edit update destroy resync hide ]
 
   def index
-    @people = Person.ordered.page(params[:page])
+    @people = Person.visible.ordered.page(params[:page])
   end
 
   def show
@@ -53,6 +53,11 @@ class PeopleController < ApplicationController
   def resync
     PersonSyncJob.perform_later(@person)
     redirect_back(fallback_location: @person, notice: "Resynchronisation lancée")
+  end
+
+  def hide
+    @person.update(hidden: true)
+    redirect_to people_path, notice: "Personne masquée."
   end
 
   private

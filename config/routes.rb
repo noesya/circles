@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :people do
     member do
       post :resync
+      patch :hide
     end
     resources :interactions, only: [ :new, :create ]
   end

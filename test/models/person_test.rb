@@ -7,6 +7,7 @@ require "test_helper"
 #  id         :uuid             not null, primary key
 #  company    :string
 #  first_name :string
+#  hidden     :boolean          default(FALSE), not null
 #  job_title  :string
 #  last_name  :string
 #  created_at :datetime         not null
