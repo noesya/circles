@@ -10,8 +10,8 @@ class PeopleSync
   def sync
     list.each do |google_person|
       first_email = google_person.email_addresses&.map(&:value)&.first
-      first_name = google_person.names&.first&.given_name&.titlize
-      last_name = google_person.names&.first&.family_name&.titlize
+      first_name = google_person.names&.first&.given_name&.titleize
+      last_name = google_person.names&.first&.family_name&.titleize
       next if first_email.nil? || last_name.nil?
       all_emails = google_person.email_addresses&.map(&:value)
       # Recherche par le mail
@@ -25,9 +25,10 @@ class PeopleSync
         person.emails.where(value: email).first_or_create
       end
       # Ajout des numéros de téléphone
+      next if google_person.phone_numbers.nil?
       google_person.phone_numbers.each do |phone_number|
-        canonical = google_person.phone_numbers.first.canonical_form
-        value = google_person.phone_numbers.first.value
+        canonical = phone_number.canonical_form
+        value = phone_number.value
         person.phones.where(canonical: canonical).first_or_create do |phone|
           phone.value = value
         end

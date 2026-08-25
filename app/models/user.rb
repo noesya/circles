@@ -35,6 +35,6 @@ class User < ApplicationRecord
   end
 
   def to_s
-    first_name.present? ? "#{first_name}" : "#{email}"
+    first_name.present? ? "#{first_name} #{last_name}" : "#{email}"
   end
 end

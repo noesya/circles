@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     omniauth_callbacks: "users/omniauth_callbacks"
   }
-  authenticated :user, -> user { user.server_admin? } do
+  authenticated :user do
     mount GoodJob::Engine => 'good_job'
   end
 
