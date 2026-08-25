@@ -1,7 +1,12 @@
 <% content_for :title, 'Utilisateurices' %>
 
-<ul class="list-unstyled">
-  <% @users.each do |user| %>
-    <li><%= link_to user, user %></li>
-  <% end %>
-</ul>
+<table class="table">
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user, user %></td>
+        <td><%= user.people.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

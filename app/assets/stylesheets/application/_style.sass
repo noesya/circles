@@ -20,8 +20,26 @@ header
             font-size: 25px
             margin-top: -2px
 .person
+    position: relative
+    margin-bottom: 30px
+    align-items: center
+    display: flex
+    gap: 30px
     a
         color: black
         font-family: $font-signifier
         font-size: 22px
         text-decoration: none
+    &__avatar
+        width: 100px
+        height: 100px
+        border-radius: 100px
+        overflow: hidden
+        img
+            object-fit: fill
+            width: 100%
+        span
+            width: 100%
+            height: 100%
+            background: #CCCCCC
+            display: block

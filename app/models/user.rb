@@ -24,6 +24,11 @@ class User < ApplicationRecord
           :omniauthable,
           omniauth_providers: [:saml]
 
+  has_many :google_contacts,
+            dependent: :destroy
+  has_many :people,
+            through: :google_contacts
+
   def self.from_omniauth(auth)
     user = User.where(email: auth.uid.downcase).first_or_initialize do |u|
       u.password = "#{Devise.friendly_token[0,20]}!"

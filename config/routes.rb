@@ -6,7 +6,11 @@ Rails.application.routes.draw do
     mount GoodJob::Engine => 'good_job'
   end
 
-  resources :people
+  resources :people do
+    member do
+      post :resync
+    end
+  end
   resources :users, only: [:index, :show] do 
     member do
       post :sync

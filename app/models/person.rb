@@ -11,6 +11,10 @@
 class Person < ApplicationRecord
   has_many  :emails, dependent: :destroy
   has_many  :phones, dependent: :destroy
+  has_many :google_contacts,
+            class_name: 'User::GoogleContact',
+            dependent: :destroy
+  has_one_attached :avatar
 
   scope :ordered, -> { order(:last_name, :first_name)}
 

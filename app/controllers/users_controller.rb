@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   
   def sync
     @user = User.find(params.expect(:id))
-    SyncUserJob.perform_later(@user)
+    UserSyncJob.perform_later(@user)
     redirect_back(fallback_location: @user, notice: 'Synchronisation lancée')
   end
 end

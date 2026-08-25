@@ -1,9 +1,13 @@
 
-<%= simple_form_for(@person) do |f| %>
+<%= simple_form_for(@person, html: { multipart: true }) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
+    <% if f.object.avatar.attached? %>
+      <%= image_tag f.object.avatar, class: "rounded-circle mb-3", width: 100, height: 100 %>
+    <% end %>
+    <%= f.input :avatar, as: :file %>
     <%= f.input :first_name %>
     <%= f.input :last_name %>
   </div>

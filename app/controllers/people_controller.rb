@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_action :set_person, only: %i[ show edit update destroy ]
+  before_action :set_person, only: %i[ show edit update destroy resync ]
 
   def index
     @people = Person.ordered.page(params[:page])
@@ -50,6 +50,11 @@ class PeopleController < ApplicationController
     end
   end
 
+  def resync
+    PersonSyncJob.perform_later(@person)
+    redirect_back(fallback_location: @person, notice: "Resynchronisation lancée")
+  end
+
   private
 
     def set_person
@@ -57,6 +62,6 @@ class PeopleController < ApplicationController
     end
 
     def person_params
-      params.expect(person: [ :first_name, :last_name ])
+      params.expect(person: [ :first_name, :last_name, :avatar ])
     end
 end

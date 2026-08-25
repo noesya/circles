@@ -1,13 +1,44 @@
 <%= content_for :title, @person %>
 
-<ul class="list-unstyled">
-  <% @person.emails.each do |email| %>
-    <li><%= link_to email, "mailto:#{email}" %></li>
-  <% end %>
-</ul>
 
-<ul class="list-unstyled">
-  <% @person.phones.each do |phone| %>
-    <li><%= link_to phone, "tel:#{phone.canonical}" %></li>
+<div class="d-flex align-items-center gap-5 mb-5">
+  <% if @person.avatar.attached? %>
+    <%= image_tag @person.avatar,
+                  class: "rounded-circle mb-5",
+                  width: 300,
+                  height: 300 %>
   <% end %>
-</ul>
+  <h1 class="mb-5"><%= content_for(:title) %></h1>
+</div>
+<div class="row mb-5 ">
+  <div class="col-lg-6">
+    Mail
+    <ul class="list-unstyled">
+      <% @person.emails.each do |email| %>
+        <li><%= link_to email, "mailto:#{email}" %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="col-lg-6">
+    Tel
+    <ul class="list-unstyled">
+      <% @person.phones.each do |phone| %>
+        <li><%= link_to phone, "tel:#{phone.canonical}" %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="mb-5">
+  <%= link_to 'Modifier', edit_person_path(@person), class: 'btn btn-primary' %>
+  <%= link_to 'Resynchroniser depuis Google', resync_person_path(@person), method: :post, class: 'btn btn-secondary' %>
+</div>
+
+<div class="small">
+  <p>
+    Google
+    <% @person.google_contacts.each do |contact| %>
+      <br><%= contact.user %> — <%= contact.resource_name %>
+    <% end %>
+  </p>
+</div>
