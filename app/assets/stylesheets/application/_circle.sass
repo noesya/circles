@@ -1,0 +1,37 @@
+.avatar
+    position: relative
+.circle
+    border: 1px black solid
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 100px
+    height: 100px
+    border-radius: 100px
+    position: absolute
+    overflow: hidden
+    background: white
+    right: 0
+    bottom: 0
+    a
+        text-decoration: none
+    &--in
+        background: black
+        span
+            color: white
+        a
+            color: white
+    span
+        text-align: center
+        font-size: 12px
+        line-height: 120%
+        padding: 10px
+    .circle__out
+        display: block
+    .circle__hover
+        display: none
+    &:hover
+        .circle__out
+            display: none
+        .circle__hover
+            display: block

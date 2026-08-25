@@ -17,6 +17,10 @@ Rails.application.routes.draw do
     member do
       post :sync
     end
+    collection do
+      post 'add/:person_id' => 'users#add_to_my_circle', as: :add_to_my_circle
+      post 'remove/:person_id' => 'users#remove_from_my_circle', as: :remove_from_my_circle
+    end
   end
   root to: "home#index"
 end

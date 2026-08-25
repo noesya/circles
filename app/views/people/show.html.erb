@@ -3,12 +3,15 @@
 
 <div class="row d-flex align-items-center">
   <div class="col-lg-3">
-  <% if @person.avatar.attached? %>
-    <%= image_tag @person.avatar,
-                  class: "rounded-circle img-fluid",
-                  width: 300,
-                  height: 300 %>
-  <% end %>
+    <div class="avatar">
+      <% if @person.avatar.attached? %>
+        <%= image_tag @person.avatar,
+                      class: "rounded-circle img-fluid",
+                      width: 300,
+                      height: 300 %>
+      <% end %>
+      <%= render 'people/circle', person: @person %>
+    </div>
   </div>
   <div class="col-lg-9">
     <h1><%= content_for(:title) %></h1>

@@ -28,6 +28,9 @@ class User < ApplicationRecord
             dependent: :destroy
   has_many :people,
             through: :google_contacts
+  has_and_belongs_to_many :people_in_circle,
+                          class_name: 'Person',
+                          foreign_key: :user_id
   has_many :interactions, dependent: :destroy
 
   def self.from_omniauth(auth)
@@ -38,6 +41,20 @@ class User < ApplicationRecord
     user.last_name = auth.info.last_name if auth.info.last_name.present?
     user.save
     user
+  end
+
+  def person_in_my_circle?(person)
+    people_in_circle.where(id: person.id).exists?
+  end
+
+  def add(person)
+    return if person_in_my_circle?(person)
+    people_in_circle << person
+  end
+
+  def remove(person)
+    return unless person_in_my_circle?(person)
+    people_in_circle.delete(person)
   end
 
   def to_s

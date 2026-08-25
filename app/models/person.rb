@@ -17,6 +17,9 @@ class Person < ApplicationRecord
   has_many :interactions, dependent: :destroy
   has_one_attached :avatar
 
+  has_and_belongs_to_many :in_users_circles,
+                          class_name: 'User'
+
   scope :ordered, -> { order(:last_name, :first_name)}
 
   def to_s

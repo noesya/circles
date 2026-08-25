@@ -1,0 +1,32 @@
+<%
+in_my_circle = current_user.person_in_my_circle?(person)
+other_users = person.in_users_circles.where.not(id: current_user)
+%>
+
+<div class="circle circle--<%= in_my_circle ? 'in' : 'out' %>">
+  <% if in_my_circle %>
+    <span class="circle__out">
+      Dans mon cercle
+    </span>
+    <span class="circle__hover">
+      <%= link_to remove_from_my_circle_users_path(person), method: :post, class: 'stretched-link' do %>
+        <%= bootstrap_icon("x-lg") %>
+      <% end %>
+    </span>
+  <% else %>
+    <span class="circle__out">
+      Hors de mon cercle
+    </span>
+    <span class="circle__hover">
+      <%= link_to add_to_my_circle_users_path(person), method: :post, class: 'stretched-link' do %>
+        <%= bootstrap_icon("plus-lg") %>
+      <% end %>
+    </span>
+  <% end %>
+</div>
+
+<% if other_users.any? %>
+  <p class="small">
+    Cette personne est aussi dans le cercle de <%= other_users.to_sentence %>.
+  </p>
+<% end %>

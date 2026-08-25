@@ -3,7 +3,7 @@
     <div class="person col-lg-6">
       <div class="person__avatar">
         <% if person.avatar.attached? %>
-          <%= image_tag person.avatar, class: "rounded-circle" %>
+          <%= image_tag person.avatar, class: 'rounded-circle' %>
         <% else %>
           <span></span>
         <% end %>
@@ -13,4 +13,4 @@
   <% end %>
 </div>
 <%= paginate people, theme: 'bootstrap-5' %>
-<p><%= people.total_count %> personnes</p>
+<p><%= people.total_count %> personne<%= 's' if people.many? %></p>
