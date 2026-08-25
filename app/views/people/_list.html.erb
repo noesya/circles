@@ -1,12 +1,15 @@
 <div class="row mb-5">
   <% people.each do |person| %>
     <div class="person col-lg-6">
-      <div class="person__avatar">
-        <% if person.avatar.attached? %>
-          <%= image_tag person.avatar, class: 'rounded-circle' %>
-        <% else %>
-          <span></span>
-        <% end %>
+      <div class="position-relative">
+        <div class="person__avatar">
+          <% if person.avatar.attached? %>
+            <%= image_tag person.avatar, class: 'rounded-circle' %>
+          <% else %>
+            <span></span>
+          <% end %>
+        </div>
+        <%= render 'people/circle_small', person: person %>
       </div>
       <div>
         <h2 class="mb-1"><%= link_to person.to_s, person, class: 'stretched-link' %></h2>
