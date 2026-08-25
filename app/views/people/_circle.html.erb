@@ -26,7 +26,7 @@ other_users = person.in_users_circles.where.not(id: current_user)
 </div>
 
 <% if other_users.any? %>
-  <p class="small">
+  <p class="circle__also small">
     Cette personne est aussi dans le cercle de <%= other_users.to_sentence %>.
   </p>
 <% end %>
