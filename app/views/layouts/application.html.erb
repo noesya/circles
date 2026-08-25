@@ -12,9 +12,10 @@
   <body>
     <%= render 'header' %>
     <main class="container">
-      <h1><%= content_for(:title) %></h1>
+      <h1 class="mb-5"><%= content_for(:title) %></h1>
       <%= yield %>
     </main>
+    <%= render 'footer' %>
     <%= javascript_include_tag 'application' %>
   </body>
 </html>
