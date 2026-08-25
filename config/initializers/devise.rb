@@ -278,7 +278,20 @@ Devise.setup do |config|
                   issuer:                 ENV["SAML_ISSUER"],
                   idp_sso_target_url:     ENV["SAML_TARGET_URL"],
                   idp_cert:               Base64.decode64(ENV["SAML_BASE64_CERTIFICATE"].to_s),
-                  name_identifier_format: ENV["SAML_NAMEID_FORMAT"]
+                  name_identifier_format: ENV["SAML_NAMEID_FORMAT"],
+                  attribute_statements: {
+                    email: ["email", "mail", "urn:oid:0.9.2342.19200300.100.1.3"],
+                    first_name: [
+                      "first_name", "firstname", "firstName", "givenName",
+                      "urn:oid:2.5.4.42",
+                      "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname"
+                    ],
+                    last_name: [
+                      "last_name", "lastname", "lastName", "surname", "sn",
+                      "urn:oid:2.5.4.4",
+                      "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname"
+                    ]
+                  }
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
