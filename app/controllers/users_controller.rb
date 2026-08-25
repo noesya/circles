@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params.expect(:id))
-    @people = @user.people.ordered.page(params[:page])
+    @people = @user.people_in_circle.ordered.page(params[:page])
   end
   
   def sync

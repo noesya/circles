@@ -1,11 +1,19 @@
 <% content_for :title, 'Utilisateurices' %>
 
 <table class="table">
+  <thead>
+    <tr>
+      <th>Utilisateurice</th>
+      <th>Personnes importées</th>
+      <th>Cercle</th>
+    </tr>
+  </thead>
   <tbody>
     <% @users.each do |user| %>
       <tr>
         <td><%= link_to user, user %></td>
         <td><%= user.people.count %></td>
+        <td><%= user.people_in_circle.count %></td>
       </tr>
     <% end %>
   </tbody>
