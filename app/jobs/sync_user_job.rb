@@ -15,6 +15,13 @@ class SyncUserJob < ApplicationJob
       person = person_email.person
       all_emails.each do |email|
         person.emails.where(value: email).first_or_create
+      end$
+      google_person.phone_numbers.each do |phone_number|
+        canonical = google_person.phone_numbers.first.canonical_form
+        value = google_person.phone_numbers.first.value
+        person.phones.where(canonical: canonical).first_or_create do |phone|
+          phone.value = value
+        end
       end
     end
   end

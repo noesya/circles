@@ -5,3 +5,9 @@
     <li><%= link_to email, "mailto:#{email}" %></li>
   <% end %>
 </ul>
+
+<ul class="list-unstyled">
+  <% @person.phones.each do |phone| %>
+    <li><%= link_to phone, "tel:#{phone.canonical}" %></li>
+  <% end %>
+</ul>
