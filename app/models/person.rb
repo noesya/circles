@@ -12,6 +12,8 @@ class Person < ApplicationRecord
   has_many  :emails, dependent: :destroy
   has_many  :phones, dependent: :destroy
 
+  scope :ordered, -> { order(:last_name, :first_name)}
+
   def to_s
     "#{first_name} #{last_name}"
   end

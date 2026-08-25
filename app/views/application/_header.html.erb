@@ -1,6 +1,16 @@
-<header class="container">
-  <%= link_to root_path, class: 'logo' do %>
-    <%= image_tag 'logo-noesya.svg', width: 477, height: 133 %>
-    <em>Circles</em>
-  <% end %>
+<header>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <%= link_to root_path, class: 'logo' do %>
+        <%= image_tag 'logo-noesya.svg', width: 477, height: 133 %>
+        <em>Circles</em>
+      <% end %>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <%= link_to 'Personnes', people_path, class: 'nav-link' %>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
 </header>
