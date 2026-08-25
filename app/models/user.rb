@@ -20,6 +20,7 @@
 #
 class User < ApplicationRecord
   devise  :database_authenticatable,
+          :rememberable,
           :omniauthable,
           omniauth_providers: [:saml]
 
@@ -34,6 +35,6 @@ class User < ApplicationRecord
   end
 
   def to_s
-    email
+    first_name.present? ? "#{first_name}" : "#{email}"
   end
 end
