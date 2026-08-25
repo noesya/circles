@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     member do
       post :resync
       patch :hide
+      get :merge
+      post 'merge', action: :merge_into, as: :perform_merge
     end
     collection do
       get :search

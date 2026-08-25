@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_action :set_person, only: %i[ show edit update destroy resync hide ]
+  before_action :set_person, only: %i[ show edit update destroy resync hide merge merge_into ]
 
   def index
     @people = Person.visible.ordered.page(params[:page])
@@ -65,6 +65,21 @@ class PeopleController < ApplicationController
       .where("first_name ILIKE :q OR last_name ILIKE :q", q: "%#{params[:q]}%")
       .ordered
       .limit(10)
+  end
+
+  def merge
+  end
+
+  def merge_into
+    target = Person.find(params.expect(:target_id))
+
+    if target == @person
+      redirect_to merge_person_path(@person), alert: "Choisissez une personne différente."
+      return
+    end
+
+    PersonMerge.new(@person, target).call
+    redirect_to target, notice: "Personnes fusionnées."
   end
 
   private

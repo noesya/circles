@@ -1,0 +1,20 @@
+<%= content_for :title, "Dédoublonner #{@person}" %>
+
+<h1 class="mb-3"><%= content_for(:title) %></h1>
+
+<p>
+  Recherchez la personne à conserver. Les emails, téléphones et interactions de
+  <strong><%= @person %></strong> lui seront rattachés (sans doublons),
+  puis <strong><%= @person %></strong> sera supprimée.
+</p>
+
+<div class="search mb-5">
+  <input type="text"
+         id="merge-search"
+         class="form-control"
+         placeholder="Rechercher une personne par nom ou prénom..."
+         autocomplete="off"
+         data-exclude-id="<%= @person.id %>"
+         data-merge-url="<%= perform_merge_person_path(@person) %>">
+  <ul id="merge-search-results" class="search__results list-unstyled"></ul>
+</div>
