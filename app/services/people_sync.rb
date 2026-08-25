@@ -2,7 +2,7 @@ require 'google/apis/people_v1'
 require 'open-uri'
 
 class PeopleSync
-  PERSON_FIELDS = 'names,emailAddresses,phoneNumbers,photos'
+  PERSON_FIELDS = 'names,emailAddresses,phoneNumbers,photos,organizations'
 
   def self.resync_person(person)
     person.google_contacts.any? do |google_contact|
@@ -26,6 +26,7 @@ class PeopleSync
       person = find_or_create_person(emails, first_name, last_name)
 
       register_contact(person, google_person)
+      sync_organization(person, google_person)
       sync_emails(person, google_person)
       sync_phones(person, google_person)
       attach_avatar(person, google_person) unless person.avatar.attached?
@@ -36,7 +37,7 @@ class PeopleSync
     contact = person.google_contacts.find_by!(user: user)
     google_person = fetch_person(contact.resource_name)
     return false if google_person.nil?
-
+    sync_organization(person, google_person)
     sync_emails(person, google_person)
     sync_phones(person, google_person)
     true
@@ -58,6 +59,13 @@ class PeopleSync
   rescue Google::Apis::ClientError => e
     Rails.logger.warn("PeopleSync: get_person failed for #{resource_name}: #{e.message}")
     nil
+  end
+
+  def sync_organization(person, google_person)
+    organization = google_person.organizations&.first
+    return if organization.nil?
+    person.update_colum :job_title, organization.title if person.job_title.blank?
+    person.update_colum :company, organization.name if person.company.blank?
   end
 
   def sync_emails(person, google_person)

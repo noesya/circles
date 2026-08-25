@@ -3,7 +3,9 @@
 # Table name: people
 #
 #  id         :uuid             not null, primary key
+#  company    :string
 #  first_name :string
+#  job_title  :string
 #  last_name  :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -21,6 +23,10 @@ class Person < ApplicationRecord
                           class_name: 'User'
 
   scope :ordered, -> { order(:last_name, :first_name)}
+
+  def status
+    "#{job_title} #{company}"
+  end
 
   def to_s
     "#{first_name} #{last_name}"

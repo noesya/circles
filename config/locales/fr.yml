@@ -9,6 +9,7 @@ fr:
   activerecord:
     models:
       interaction: "Interaction"
+      person: "Personne"
     attributes:
       interaction:
         kind: "Type"
@@ -17,6 +18,11 @@ fr:
         title: "Titre"
         description: "Description"
         person: "Personne"
+      person:
+        first_name: "Prénom"
+        last_name: "Nom"
+        job_title: "Fonction"
+        company: "Entreprise"
     values:
       interaction:
         kind:

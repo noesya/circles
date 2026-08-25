@@ -8,7 +8,10 @@
           <span></span>
         <% end %>
       </div>
-      <%= link_to person.to_s, person, class: 'stretched-link' %>
+      <div>
+        <h2 class="mb-1"><%= link_to person.to_s, person, class: 'stretched-link' %></h2>
+        <p class="text-muted small"><%= person.status %></p>
+      </div>
     </div>
   <% end %>
 </div>
