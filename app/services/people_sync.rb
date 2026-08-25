@@ -103,9 +103,9 @@ class PeopleSync
   def list
     unless @list
       @list = []
-      @list.concat request.connections
+      @list.concat(request.connections || [])
       while next_page_token do
-        @list.concat request.connections
+        @list.concat(request.connections || [])
       end
     end
     @list
