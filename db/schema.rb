@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_25_130450) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_25_141800) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -155,7 +155,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_130450) do
     t.uuid "user_id", null: false
     t.index ["occurred_at"], name: "index_interactions_on_occurred_at"
     t.index ["person_id"], name: "index_interactions_on_person_id"
-    t.index ["user_id", "source_id"], name: "index_interactions_on_user_id_and_source_id", unique: true, where: "(source_id IS NOT NULL)"
+    t.index ["user_id", "person_id", "source_id"], name: "index_interactions_on_user_id_and_person_id_and_source_id", unique: true, where: "(source_id IS NOT NULL)"
     t.index ["user_id"], name: "index_interactions_on_user_id"
   end
 
@@ -204,6 +204,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_130450) do
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "calendar_synced_at"
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false

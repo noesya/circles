@@ -17,7 +17,7 @@ class PeopleSync
   end
 
   def sync
-    list.each do |google_person|
+    people.each do |google_person|
       emails = google_person.email_addresses&.map(&:value) || []
       first_name = google_person.names&.first&.given_name&.titleize
       last_name = google_person.names&.first&.family_name&.titleize
@@ -108,29 +108,22 @@ class PeopleSync
     end
   end
 
-  def list
-    unless @list
-      @list = []
-      @list.concat(request.connections || [])
-      while next_page_token do
-        @list.concat(request.connections || [])
+  def people
+    unless @people
+      @people = []
+      page_token = nil
+      loop do
+        response = people_service.list_person_connections(
+          'people/me',
+          person_fields: PERSON_FIELDS,
+          page_token: page_token
+        )
+        @people.concat(response.connections || [])
+        page_token = response.next_page_token
+        break if page_token.nil?
       end
     end
-    @list
-  end
-
-  def request
-    request = people_service.list_person_connections(
-      'people/me',
-      person_fields: PERSON_FIELDS,
-      page_token: next_page_token
-    )
-    @next_page_token = request.next_page_token
-    request
-  end
-
-  def next_page_token
-    @next_page_token
+    @people
   end
 
   def people_service

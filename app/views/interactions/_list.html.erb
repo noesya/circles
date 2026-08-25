@@ -15,21 +15,25 @@
       <% interactions.timeline.each do |interaction| %>
         <li class="timeline__item">
           <div class="timeline__head d-flex justify-content-between align-items-center">
-            <span class="timeline__icon"><%= bootstrap_icon(icons.fetch(interaction.kind), width: 14, height: 14) %></span>
+            <span class="timeline__icon">
+              <%= link_to edit_interaction_path(interaction), class: 'stretched-link' do %>
+                <%= bootstrap_icon(icons.fetch(interaction.kind), width: 14, height: 14) %>
+              <% end %>
+            </span>
             <div class="timeline__title">
               <%= interaction.title.presence || interaction.kind_label %>
-              <% if interaction.external_url.present? %>
-                <%= link_to 'lien', interaction.external_url, class: 'small' %>
-              <% end %>
-            </div>
-            <div class="text-nowrap">
-              <%= link_to 'Modifier', edit_interaction_path(interaction), class: 'btn btn-sm btn-link' %>
             </div>
           </div>
 
           <div class="timeline__date">
             <%= interaction.occurred_at.strftime("%d/%m/%Y") %>
             avec <%= interaction.user %>
+            <% if interaction.external_url.present? %>
+              <%= link_to interaction.external_url, target: :_blank do %>
+                <%= bootstrap_icon 'box-arrow-up-right', width: 12, height: 12 %>
+              <% end %>
+            <% end %>
+
           </div>
           <% if interaction.description.present? %>
             <div class="timeline__description"><%= interaction.description %></div>

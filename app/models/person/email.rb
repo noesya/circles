@@ -19,6 +19,8 @@
 class Person::Email < ApplicationRecord
   belongs_to :person
 
+  normalizes :value, with: ->(value) { value.to_s.strip.downcase }
+
   def to_s
     "#{value}"
   end

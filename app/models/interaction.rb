@@ -16,10 +16,10 @@
 #
 # Indexes
 #
-#  index_interactions_on_occurred_at            (occurred_at)
-#  index_interactions_on_person_id              (person_id)
-#  index_interactions_on_user_id                (user_id)
-#  index_interactions_on_user_id_and_source_id  (user_id,source_id) UNIQUE WHERE (source_id IS NOT NULL)
+#  index_interactions_on_occurred_at                          (occurred_at)
+#  index_interactions_on_person_id                            (person_id)
+#  index_interactions_on_user_id                              (user_id)
+#  index_interactions_on_user_id_and_person_id_and_source_id  (user_id,person_id,source_id) UNIQUE WHERE (source_id IS NOT NULL)
 #
 # Foreign Keys
 #

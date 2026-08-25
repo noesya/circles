@@ -7,7 +7,7 @@ class UserSync
 
   def sync
     PeopleSync.new(user).sync
-    # CalendarSync.new(user).sync
+    CalendarSync.new(user).sync
     # MailSync.new(user).sync
   end
 end

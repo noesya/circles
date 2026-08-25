@@ -21,20 +21,24 @@
 </div>
 <div class="row mb-4">
   <div class="offset-lg-3 col-lg-4">
-    Mail
-    <ul class="list-unstyled">
-      <% @person.emails.each do |email| %>
-        <li><%= link_to email, "mailto:#{email}" %></li>
-      <% end %>
-    </ul>
+    <% if @person.emails.any? %>
+      Mail
+      <ul class="list-unstyled">
+        <% @person.emails.each do |email| %>
+          <li><%= link_to email, "mailto:#{email}" %></li>
+        <% end %>
+      </ul>
+    <% end %>
   </div>
   <div class="col-lg-4">
-    Tel
-    <ul class="list-unstyled">
-      <% @person.phones.each do |phone| %>
-        <li><%= link_to phone, "tel:#{phone.canonical}" %></li>
-      <% end %>
-    </ul>
+    <% if @person.phones.any? %>
+      Tel
+      <ul class="list-unstyled">
+        <% @person.phones.each do |phone| %>
+          <li><%= link_to phone, "tel:#{phone.canonical}" %></li>
+        <% end %>
+      </ul>
+    <% end %>
   </div>
 </div>
 
