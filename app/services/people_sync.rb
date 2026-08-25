@@ -64,8 +64,8 @@ class PeopleSync
   def sync_organization(person, google_person)
     organization = google_person.organizations&.first
     return if organization.nil?
-    person.update_colum :job_title, organization.title if person.job_title.blank?
-    person.update_colum :company, organization.name if person.company.blank?
+    person.update_column :job_title, organization.title if person.job_title.blank?
+    person.update_column :company, organization.name if person.company.blank?
   end
 
   def sync_emails(person, google_person)
