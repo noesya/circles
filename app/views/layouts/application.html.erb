@@ -23,7 +23,10 @@
   </head>
 
   <body>
-    <%= yield %>
+    <h1><%= content_for(:title) %></h1>
+    <main>
+      <%= yield %>
+    </main>
     <%= javascript_include_tag "application" %>
   </body>
 </html>

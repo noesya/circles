@@ -1,16 +1,14 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, 'Personnes' %>
 
-<% content_for :title, "People" %>
+<p><%= @people.total_count %></p>
 
-<h1>People</h1>
-
-<div id="people">
+<div class="row">
   <% @people.each do |person| %>
-    <%= render person %>
-    <p>
-      <%= link_to "Show this person", person %>
-    </p>
+    <div class="position-relative col-xl-2">
+
+      <%= link_to person.to_s, person, class: 'stretched-link' %>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New person", new_person_path %>
+<%= paginate @people %>

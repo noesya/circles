@@ -5,6 +5,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params.expect(:id))
-    @google_people = GooglePeople.new(@user.email)
+  end
+  
+  def sync
+    @user = User.find(params.expect(:id))
+    SyncUserJob.perform_later(@user)
+    redirect_back(fallback_location: @user, notice: 'Synchronisation lancée')
   end
 end

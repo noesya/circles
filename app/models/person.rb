@@ -9,4 +9,10 @@
 #  updated_at :datetime         not null
 #
 class Person < ApplicationRecord
+  has_many  :emails,
+            dependent: :destroy
+
+  def to_s
+    "#{first_name} #{last_name}"
+  end
 end

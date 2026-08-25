@@ -1,10 +1,7 @@
-<p style="color: green"><%= notice %></p>
+<%= content_for :title, @person.to_s %>
 
-<%= render @person %>
-
-<div>
-  <%= link_to "Edit this person", edit_person_path(@person) %> |
-  <%= link_to "Back to people", people_path %>
-
-  <%= button_to "Destroy this person", @person, method: :delete %>
-</div>
+<ul class="list-unstyled">
+  <% @person.emails.each do |email| %>
+    <li><%= link_to email, "mailto:#{email}" %></li>
+  <% end %>
+</ul>
