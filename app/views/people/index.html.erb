@@ -2,13 +2,12 @@
 
 <p><%= @people.total_count %></p>
 
-<div class="row">
+<div class="row mb-5">
   <% @people.each do |person| %>
-    <div class="position-relative col-xl-2">
-
+    <div class="person position-relative col-lg-6">
       <%= link_to person.to_s, person, class: 'stretched-link' %>
     </div>
   <% end %>
 </div>
 
-<%= paginate @people %>
+<%= paginate @people, theme: 'bootstrap-5' %>
