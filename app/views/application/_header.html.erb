@@ -5,14 +5,16 @@
         <%= image_tag 'logo-noesya.svg', width: 477, height: 133 %>
         <em>Circles</em>
       <% end %>
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <%= link_to 'Personnes', people_path, class: 'nav-link' %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'Utilisateurices', users_path, class: 'nav-link' %>
-        </li>
-      </ul>
+      <% if current_user %>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <%= link_to 'Personnes', people_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Utilisateurices', users_path, class: 'nav-link' %>
+          </li>
+        </ul>
+      <% end %>
     </div>
   </nav>
 

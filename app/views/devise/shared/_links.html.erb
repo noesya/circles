@@ -21,5 +21,8 @@
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
     <p><%= button_to "SSO", omniauth_authorize_path(resource_name, provider), data: { turbo: false }, class: 'btn btn-primary' %></p>
+    <p class="small">
+      Cette application est réservée à l'équipe de la coopérative.
+    </p>
   <% end %>
 <% end %>
