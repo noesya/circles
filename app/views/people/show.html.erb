@@ -51,14 +51,16 @@
       <%= link_to 'Masquer', hide_person_path(@person), method: :patch, class: 'text-danger' %>
     </div>
 
-    <div class="small">
-      <p>
-        Dans les contacts Google de
-        <% @person.google_contacts.each do |contact| %>
-          <br><%= link_to contact.user, contact.user %> (<%= contact.resource_name %>)
-        <% end %>
-      </p>
-    </div>
+    <% if @person.google_contacts.any? %>
+      <div class="small">
+        <p>
+          Dans les contacts Google de
+          <% @person.google_contacts.each do |contact| %>
+            <br><%= link_to contact.user, contact.user %> (<%= contact.resource_name %>)
+          <% end %>
+        </p>
+      </div>
+    <% end %>
   </div>
 </div>
 

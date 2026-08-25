@@ -2,5 +2,14 @@
 
 <h1 class="mb-5"><%= content_for(:title) %></h1>
 
+<div class="search mb-5">
+  <input type="text"
+         id="person-search"
+         class="form-control"
+         placeholder="Rechercher une personne par nom ou prénom..."
+         autocomplete="off">
+  <ul id="person-search-results" class="search__results list-unstyled"></ul>
+</div>
+
 <p>Dans votre cercle...</p>
 <%= render 'people/list', people: @people %>

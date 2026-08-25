@@ -11,6 +11,9 @@ Rails.application.routes.draw do
       post :resync
       patch :hide
     end
+    collection do
+      get :search
+    end
     resources :interactions, only: [ :new, :create ]
   end
   resources :interactions, only: [ :edit, :update, :destroy ]

@@ -1,0 +1,27 @@
+.search
+    position: relative
+    max-width: 400px
+    &__results
+        position: absolute
+        top: 100%
+        left: 0
+        right: 0
+        z-index: 10
+        margin: 4px 0 0
+        padding: 4px 0
+        background: white
+        border: 1px solid #E5E5E5
+        border-radius: 4px
+        box-shadow: 0 4px 12px rgba(0, 0, 0, .08)
+        max-height: 320px
+        overflow-y: auto
+        &:empty
+            display: none
+        li
+            a
+                display: block
+                padding: 8px 16px
+                color: black
+                text-decoration: none
+                &:hover
+                    background: #F5F5F5

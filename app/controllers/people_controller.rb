@@ -60,6 +60,13 @@ class PeopleController < ApplicationController
     redirect_to people_path, notice: "Personne masquée."
   end
 
+  def search
+    @people = Person.visible
+      .where("first_name ILIKE :q OR last_name ILIKE :q", q: "%#{params[:q]}%")
+      .ordered
+      .limit(10)
+  end
+
   private
 
     def set_person
