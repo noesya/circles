@@ -1,0 +1,5 @@
+<%= content_for :title, "Modifier l'interaction avec #{@interaction.person}" %>
+
+<%= render "form" %>
+
+<%= button_to 'Supprimer', interaction_path(@interaction), method: :delete, class: 'btn btn-link text-danger' %>

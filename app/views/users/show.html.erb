@@ -1,3 +1,10 @@
 <h1><%= @user %></h1>
 
-<%= link_to 'Synchroniser', sync_user_path, method: :post %>
+<div class="mb-5">
+  <%= link_to 'Synchroniser avec Google',
+              sync_user_path,
+              method: :post,
+              class: 'btn btn-primary' %>
+</div>
+
+<%= render 'people/list', people: @people %>

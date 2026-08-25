@@ -10,7 +10,9 @@ Rails.application.routes.draw do
     member do
       post :resync
     end
+    resources :interactions, only: [ :new, :create ]
   end
+  resources :interactions, only: [ :edit, :update, :destroy ]
   resources :users, only: [:index, :show] do 
     member do
       post :sync

@@ -1,0 +1,41 @@
+<div class="row mb-5">
+  <div class="offset-lg-3 col-lg-6">
+    <% icons = { "call" => "telephone-fill", "calendar_event" => "calendar-event-fill", "email" => "envelope-fill" } %>
+    <ul class="timeline">
+      <li class="timeline__item">
+        <div class="timeline__head d-flex align-items-center">
+          <%= link_to bootstrap_icon("plus-lg", width: 14, height: 14),
+                      new_person_interaction_path(person),
+                      class: 'timeline__icon timeline__icon--add',
+                      title: 'Ajouter une interaction' %>
+          <div class="timeline__title"></div>
+        </div>
+      </li>
+
+      <% interactions.timeline.each do |interaction| %>
+        <li class="timeline__item">
+          <div class="timeline__head d-flex justify-content-between align-items-center">
+            <span class="timeline__icon"><%= bootstrap_icon(icons.fetch(interaction.kind), width: 14, height: 14) %></span>
+            <div class="timeline__title">
+              <%= interaction.title.presence || interaction.kind_label %>
+              <% if interaction.external_url.present? %>
+                <%= link_to 'lien', interaction.external_url, class: 'small' %>
+              <% end %>
+            </div>
+            <div class="text-nowrap">
+              <%= link_to 'Modifier', edit_interaction_path(interaction), class: 'btn btn-sm btn-link' %>
+            </div>
+          </div>
+
+          <div class="timeline__date">
+            <%= interaction.occurred_at.strftime("%d/%m/%Y") %>
+            avec <%= interaction.user %>
+          </div>
+          <% if interaction.description.present? %>
+            <div class="timeline__description"><%= interaction.description %></div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

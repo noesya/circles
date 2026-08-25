@@ -1,21 +1,5 @@
 <% content_for :title, 'Personnes' %>
 
 <h1 class="mb-5"><%= content_for(:title) %></h1>
-<p><%= @people.total_count %> personnes</p>
 
-<div class="row mb-5">
-  <% @people.each do |person| %>
-    <div class="person col-lg-6">
-      <div class="person__avatar">
-        <% if person.avatar.attached? %>
-          <%= image_tag person.avatar, class: "rounded-circle" %>
-        <% else %>
-          <span></span>
-        <% end %>
-      </div>
-      <%= link_to person.to_s, person, class: 'stretched-link' %>
-    </div>
-  <% end %>
-</div>
-
-<%= paginate @people, theme: 'bootstrap-5' %>
+<%= render 'people/list', people: @people %>

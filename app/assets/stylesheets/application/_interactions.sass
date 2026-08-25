@@ -1,0 +1,53 @@
+.timeline
+    position: relative
+    list-style: none
+    padding-left: 64px
+    transform: translateX(-30px)
+    margin: 0
+    &::before
+        content: ""
+        position: absolute
+        top: 4px
+        bottom: 4px
+        left: 31px
+        width: 1px
+        background: #999999
+    &__item
+        padding-bottom: 32px
+        min-height: 60px
+        &:last-child
+            padding-bottom: 0
+    &__head
+        position: relative
+    &__icon
+        position: absolute
+        left: -56px
+        top: 50%
+        transform: translateY(-50%)
+        padding: 16px
+        border-radius: 100px
+        background: #EEEEEE
+        background: white
+        border: 1px solid #999999
+        color: #333333
+        display: flex
+        align-items: center
+        justify-content: center
+        svg
+            width: 14px
+            height: 14px
+        &--add
+            text-decoration: none
+            transition: background-color .15s
+            &:hover
+                background: #DDDDDD
+    &__date
+        font-size: 13px
+        color: #888888
+    &__title
+        font-family: $font-signifier
+        font-size: 18px
+    &__description
+        color: #555555
+        font-size: 14px
+        margin-top: 4px

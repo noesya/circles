@@ -116,6 +116,11 @@ GEM
       msgpack (~> 1.5)
     bootstrap (5.3.8)
       popper_js (>= 2.11.8, < 3)
+    bootstrap-icons (1.0.15)
+      nokogiri (~> 1)
+    bootstrap-icons-helper (2.0.3)
+      bootstrap-icons (~> 1)
+      rails (>= 7.1)
     bootstrap5-kaminari-views (0.0.1)
       kaminari (>= 0.13)
       rails (>= 3.1)
@@ -504,6 +509,7 @@ DEPENDENCIES
   autoprefixer-rails (~> 10.4)
   bootsnap
   bootstrap (~> 5.3)
+  bootstrap-icons-helper (~> 2.0)
   bootstrap5-kaminari-views (~> 0.0)
   breadcrumbs_on_rails (~> 4.1)
   bugsnag (~> 6.28)
@@ -565,6 +571,8 @@ CHECKSUMS
   bindex (0.8.1) sha256=7b1ecc9dc539ed8bccfc8cb4d2732046227b09d6f37582ff12e50a5047ceb17e
   bootsnap (1.25.0) sha256=41059e7d0f9cb4023a33465d095f64b913fc9d1b808d6524c307da945fbcffcf
   bootstrap (5.3.8) sha256=1c23b06df24ec28a0058ad90a0da93e260d2c0a5c453d7087f6bad428464742f
+  bootstrap-icons (1.0.15) sha256=4a19c2360f88263c1606235813b8575ff3d6c0773174ed4ceb368628e5541ae9
+  bootstrap-icons-helper (2.0.3) sha256=b021ed92708ccda4912418862d12a0ce8bea4a1945e21e5fe52e265dde0a93b5
   bootstrap5-kaminari-views (0.0.1) sha256=c8141a488e16a8ff58d332cb0d5f3cba2907dfda9437ce0b04c161cfbdf64d22
   breadcrumbs_on_rails (4.1.0) sha256=6146ecf669f6251507231028719d51d92b8f42f1f982b83a2481fa1465cb6cee
   bugsnag (6.30.0) sha256=c496cfceb4a9811ce718b0d2ff66c5a35d158804b79e60c3d2ba12d9084ff19e

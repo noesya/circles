@@ -28,6 +28,7 @@ class User < ApplicationRecord
             dependent: :destroy
   has_many :people,
             through: :google_contacts
+  has_many :interactions, dependent: :destroy
 
   def self.from_omniauth(auth)
     user = User.where(email: auth.uid.downcase).first_or_initialize do |u|

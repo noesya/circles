@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_25_095136) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_25_104811) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -142,6 +142,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_095136) do
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
   end
 
+  create_table "interactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "external_url"
+    t.integer "kind", null: false
+    t.datetime "occurred_at", null: false
+    t.uuid "person_id", null: false
+    t.string "source_id"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.uuid "user_id", null: false
+    t.index ["occurred_at"], name: "index_interactions_on_occurred_at"
+    t.index ["person_id"], name: "index_interactions_on_person_id"
+    t.index ["user_id", "source_id"], name: "index_interactions_on_user_id_and_source_id", unique: true, where: "(source_id IS NOT NULL)"
+    t.index ["user_id"], name: "index_interactions_on_user_id"
+  end
+
   create_table "people", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "first_name"
@@ -194,6 +211,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_095136) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "interactions", "people"
+  add_foreign_key "interactions", "users"
   add_foreign_key "person_emails", "people"
   add_foreign_key "person_phones", "people"
   add_foreign_key "user_google_contacts", "people"

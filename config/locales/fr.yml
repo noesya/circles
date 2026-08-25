@@ -6,3 +6,20 @@ fr:
       next: "Suivant"
       previous: "Précédent"
       truncate: "&hellip;"
+  activerecord:
+    models:
+      interaction: "Interaction"
+    attributes:
+      interaction:
+        kind: "Type"
+        user: "Avec"
+        occurred_at: "Date"
+        title: "Titre"
+        description: "Description"
+        person: "Personne"
+    values:
+      interaction:
+        kind:
+          call: "Appel"
+          calendar_event: "Rendez-vous"
+          email: "Email"
