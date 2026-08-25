@@ -6,6 +6,7 @@
       <th>Utilisateurice</th>
       <th>Cercle</th>
       <th>Personnes importées</th>
+      <th>Personnes avec des interactions</th>
       <th>Interactions</th>
     </tr>
   </thead>
@@ -14,7 +15,8 @@
       <tr>
         <td><%= link_to user, user %></td>
         <td><%= user.people_in_circle.count %></td>
-        <td><%= user.people.count %></td>
+        <td><%= user.people_imported.count %></td>
+        <td><%= user.people_with_interactions.count %></td>
         <td><%= user.interactions.count %></td>
       </tr>
     <% end %>

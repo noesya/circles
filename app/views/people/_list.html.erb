@@ -1,3 +1,7 @@
+<%
+page_param ||= 'page'
+%>
+<p><%= people.total_count %> personne<%= 's' if people.many? %></p>
 <div class="row mb-5">
   <% people.each do |person| %>
     <div class="person col-lg-6">
@@ -18,5 +22,4 @@
     </div>
   <% end %>
 </div>
-<%= paginate people, theme: 'bootstrap-5' %>
-<p><%= people.total_count %> personne<%= 's' if people.many? %></p>
+<%= paginate people, theme: 'bootstrap-5', page_param: page_param %>

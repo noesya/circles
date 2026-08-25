@@ -25,14 +25,22 @@ class User < ApplicationRecord
           :omniauthable,
           omniauth_providers: [:saml]
 
-  has_many :google_contacts,
-            dependent: :destroy
-  has_many :people,
-            through: :google_contacts
   has_and_belongs_to_many :people_in_circle,
                           class_name: 'Person',
                           foreign_key: :user_id
+  has_many :google_contacts,
+            dependent: :destroy
+  has_many :people_imported,
+            -> { distinct }, 
+            class_name: 'Person',
+            through: :google_contacts,
+            source: :person
   has_many :interactions, dependent: :destroy
+  has_many :people_with_interactions,
+            -> { distinct }, 
+            class_name: 'Person',
+            through: :interactions,
+            source: :person
 
   def self.from_omniauth(auth)
     user = User.where(email: auth.uid.downcase).first_or_initialize do |u|
