@@ -1,7 +1,7 @@
 require 'google/apis/calendar_v3'
 
 class CalendarSync
-  EVENT_FIELDS = 'items(id,summary,htmlLink,status,start,attendees),nextPageToken'
+  EVENT_FIELDS = 'items(id,summary,htmlLink,status,start,attendees,recurringEventId),nextPageToken'
 
   attr_reader :user
 
@@ -14,6 +14,7 @@ class CalendarSync
 
     events.each do |event|
       next if event.status == "cancelled"
+      next if event.recurring_event_id.present?
 
       occurred_at = event_time(event)
       next if occurred_at.nil?

@@ -1,16 +1,21 @@
+<%
+person ||= nil
+%>
 <div class="row mb-5">
   <div class="offset-lg-3 col-lg-6">
     <% icons = { "call" => "telephone-fill", "calendar_event" => "calendar-event-fill", "email" => "envelope-fill" } %>
     <ul class="timeline">
-      <li class="timeline__item">
-        <div class="timeline__head d-flex align-items-center">
-          <%= link_to bootstrap_icon("plus-lg", width: 14, height: 14),
-                      new_person_interaction_path(person),
-                      class: 'timeline__icon timeline__icon--add',
-                      title: 'Ajouter une interaction' %>
-          <div class="timeline__title"></div>
-        </div>
-      </li>
+      <% if person.present? %>
+        <li class="timeline__item">
+          <div class="timeline__head d-flex align-items-center">
+            <%= link_to bootstrap_icon("plus-lg", width: 14, height: 14),
+                        new_person_interaction_path(person),
+                        class: 'timeline__icon timeline__icon--add',
+                        title: 'Ajouter une interaction' %>
+            <div class="timeline__title"></div>
+          </div>
+        </li>
+      <% end %>
 
       <% interactions.each do |interaction| %>
         <li class="timeline__item">

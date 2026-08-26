@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   resources :interactions, only: [ :edit, :update, :destroy ]
   resources :users, only: [:index, :show] do 
     member do
+      get :people_with_interactions
+      get :people_imported
+      get :interactions
       post :sync
     end
     collection do

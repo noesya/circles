@@ -1,0 +1,6 @@
+<% content_for :title, @user.to_s %>
+
+<h1><%= @user %></h1>
+<h2>Interactions</h2>
+<%= render 'interactions/list',
+            interactions: @interactions %>

@@ -1,0 +1,5 @@
+<% content_for :title, @user.to_s %>
+
+<h1><%= @user %></h1>
+<h2>Personnes avec des interactions</h2>
+<%= render 'people/list', people: @people %>
