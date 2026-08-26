@@ -51,7 +51,9 @@ class PeopleSync
   end
 
   def register_contact(person, google_person)
-    person.google_contacts.find_or_create_by(user: user, resource_name: google_person.resource_name)
+    person.google_contacts.find_or_create_by(user: user) do |contact|
+      contact.resource_name = google_person.resource_name
+    end
   end
 
   def fetch_person(resource_name)

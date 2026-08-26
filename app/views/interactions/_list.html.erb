@@ -12,7 +12,7 @@
         </div>
       </li>
 
-      <% interactions.timeline.each do |interaction| %>
+      <% interactions.each do |interaction| %>
         <li class="timeline__item">
           <div class="timeline__head d-flex justify-content-between align-items-center">
             <span class="timeline__icon">
@@ -43,3 +43,4 @@
     </ul>
   </div>
 </div>
+<%= paginate interactions, theme: 'bootstrap-5' %>

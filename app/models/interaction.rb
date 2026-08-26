@@ -35,7 +35,7 @@ class Interaction < ApplicationRecord
   validates :kind, presence: true
   validates :occurred_at, presence: true
 
-  scope :timeline, -> { order(occurred_at: :desc) }
+  scope :ordered, -> { order(occurred_at: :desc) }
 
   def self.kind_options
     kinds.keys.map { |k| [ I18n.t(k, scope: "activerecord.values.interaction.kind"), k ] }

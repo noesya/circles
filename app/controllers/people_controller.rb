@@ -6,6 +6,7 @@ class PeopleController < ApplicationController
   end
 
   def show
+    @interactions = @person.interactions.ordered.page(params[:page])
   end
 
   def new
