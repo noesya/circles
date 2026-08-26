@@ -1,5 +1,5 @@
 <% content_for :title, @user.to_s %>
 
-<h1><%= @user %></h1>
-<h2>Personnes importées</h2>
+<h1><%= link_to @user, @user, class: 'text-muted text-decoration-none' %></h1>
+<p class="h1 mb-5">Personnes importées</p>
 <%= render 'people/list', people: @people %>

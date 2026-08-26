@@ -41,7 +41,15 @@ class Sync::Mail < Sync::Base
 
   def correspondents(message)
     emails = %w[From To Cc].flat_map { |name| header(message, name).to_s.scan(EMAIL_REGEXP) }
-    emails.map(&:downcase).uniq.reject { |email| email.casecmp?(user.email) }
+    emails.map(&:downcase).uniq.reject { |email| internal?(email) }
+  end
+
+  def internal?(email)
+    email.end_with?("@#{organization_domain}")
+  end
+
+  def organization_domain
+    user.email.split('@').last
   end
 
   def find_or_create_person(email)
