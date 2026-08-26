@@ -2,16 +2,30 @@
 
 <h1><%= @user %></h1>
 
-<div class="mb-5">
+<div class="my-4">
   <%= link_to 'Personnes importées',
-              people_imported_user_path(@user) %><br>
+              people_imported_user_path(@user), 
+              class: 'me-3' %>
   <%= link_to 'Personnes avec des interactions',
-              people_with_interactions_user_path(@user) %><br>
+              people_with_interactions_user_path(@user), 
+              class: 'me-3' %>
   <%= link_to 'Interactions',
-              interactions_user_path(@user) %><br>
-  <%= link_to 'Synchroniser avec Google',
-              sync_user_path,
-              method: :post %>
+              interactions_user_path(@user), 
+              class: 'me-3' %>
+</div>
+<div class="mb-5">
+  <%= link_to 'Synchroniser les contacts',
+              sync_people_user_path,
+              method: :post, 
+              class: 'btn btn-primary btn-sm' %>
+  <%= link_to 'Synchroniser le calendrier',
+              sync_calendar_user_path,
+              method: :post, 
+              class: 'btn btn-primary btn-sm' %>
+  <%= link_to 'Synchroniser les mails',
+              sync_mail_user_path,
+              method: :post, 
+              class: 'btn btn-primary btn-sm' %>
 </div>
 
 <h2 class="mt-5">Cercle</h2>

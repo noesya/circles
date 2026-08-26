@@ -1,3 +1,7 @@
 {
-  "jobs": []
+  "jobs": [
+    {
+      "command": "0 21 * * * rails app:sync",
+      "size": "S"
+    },]
 }

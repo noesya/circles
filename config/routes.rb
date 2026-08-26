@@ -8,7 +8,6 @@ Rails.application.routes.draw do
 
   resources :people do
     member do
-      post :resync
       patch :hide
       get :merge
       post 'merge', action: :merge_into, as: :perform_merge
@@ -24,7 +23,9 @@ Rails.application.routes.draw do
       get :people_with_interactions
       get :people_imported
       get :interactions
-      post :sync
+      post :sync_calendar
+      post :sync_mail
+      post :sync_people
     end
     collection do
       post 'add/:person_id' => 'users#add_to_my_circle', as: :add_to_my_circle

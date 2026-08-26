@@ -1,7 +1,7 @@
 require 'google/apis/people_v1'
 require 'open-uri'
 
-class PeopleSync
+class Sync::People < Sync::Base
   PERSON_FIELDS = 'names,emailAddresses,phoneNumbers,photos,organizations'
 
   def self.resync_person(person)
@@ -10,27 +10,29 @@ class PeopleSync
     end
   end
 
-  attr_reader :user
-
-  def initialize(user)
-    @user = user
-  end
-
   def sync
-    people.each do |google_person|
+    log("fetching contacts...")
+    total = people.size
+    log("#{total} contacts to sync")
+
+    people.each_with_index do |google_person, index|
       emails = google_person.email_addresses&.map(&:value) || []
       first_name = google_person.names&.first&.given_name&.titleize
       last_name = google_person.names&.first&.family_name&.titleize
       next if emails.empty? || last_name.nil?
 
-      person = find_or_create_person(emails, first_name, last_name)
+      person = Person.find_or_create_by_email(emails, first_name: first_name, last_name: last_name, source: :contacts)
 
       register_contact(person, google_person)
       sync_organization(person, google_person)
       sync_emails(person, google_person)
       sync_phones(person, google_person)
       attach_avatar(person, google_person) unless person.avatar.attached?
+
+      log("#{index + 1}/#{total} processed") if (index + 1) % 100 == 0
     end
+
+    log("done, #{total} contacts processed")
   end
 
   def resync_person(person)
@@ -45,21 +47,14 @@ class PeopleSync
 
   protected
 
-  def find_or_create_person(emails, first_name, last_name)
-    Person::Email.where(value: emails).first&.person ||
-      Person.create(first_name: first_name, last_name: last_name)
-  end
-
   def register_contact(person, google_person)
-    person.google_contacts.find_or_create_by(user: user) do |contact|
-      contact.resource_name = google_person.resource_name
-    end
+    User::GoogleContact.find_or_register(person, user, google_person.resource_name)
   end
 
   def fetch_person(resource_name)
     people_service.get_person(resource_name, person_fields: PERSON_FIELDS)
   rescue Google::Apis::ClientError => e
-    Rails.logger.warn("PeopleSync: get_person failed for #{resource_name}: #{e.message}")
+    Rails.logger.warn("Sync::People: get_person failed for #{resource_name}: #{e.message}")
     nil
   end
 
@@ -96,7 +91,7 @@ class PeopleSync
       filename: "#{person.id}-avatar.jpg"
     )
   rescue OpenURI::HTTPError, SocketError, Timeout::Error => e
-    Rails.logger.warn("PeopleSync: failed to fetch avatar for person #{person.id}: #{e.message}")
+    Rails.logger.warn("Sync::People: failed to fetch avatar for person #{person.id}: #{e.message}")
   end
 
   # Le CDN googleusercontent.com lit la taille dans un suffixe `=sNN(-c)`
@@ -129,36 +124,10 @@ class PeopleSync
   end
 
   def people_service
-    unless @people_service
-      @people_service = Google::Apis::PeopleV1::PeopleServiceService.new
-      @people_service.authorization = authorization
-    end
-    @people_service
-  end
-
-  def authorization
-    unless @authorization
-      @authorization = Google::Auth::ServiceAccountCredentials.make_creds(
-        json_key_io: StringIO.new(json_key),
-        scope: scopes
-      )
-      @authorization.sub = user.email
-      @authorization.fetch_access_token!
-    end
-    @authorization
-  end
-
-  def json_key
-    @json_key ||= Base64.decode64(ENV.fetch('GOOGLE_APPLICATION_CREDENTIALS_BASE64'))
+    @people_service ||= build_service(Google::Apis::PeopleV1::PeopleServiceService)
   end
 
   def scopes
-    [
-      'https://www.googleapis.com/auth/calendar.readonly',
-      'https://www.googleapis.com/auth/contacts.readonly',
-      'https://www.googleapis.com/auth/directory.readonly',
-      'https://www.googleapis.com/auth/gmail.readonly',
-    ]
+    [ 'https://www.googleapis.com/auth/contacts.readonly' ]
   end
-
 end

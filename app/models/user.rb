@@ -8,6 +8,7 @@
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
 #  last_name              :string
+#  mail_synced_at         :datetime
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -41,6 +42,8 @@ class User < ApplicationRecord
             class_name: 'Person',
             through: :interactions,
             source: :person
+
+  scope :ordered, -> { order(:last_name, :first_name)}
 
   def self.from_omniauth(auth)
     user = User.where(email: auth.uid.downcase).first_or_initialize do |u|

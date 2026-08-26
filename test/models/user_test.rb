@@ -10,6 +10,7 @@ require "test_helper"
 #  encrypted_password     :string           default(""), not null
 #  first_name             :string
 #  last_name              :string
+#  mail_synced_at         :datetime
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string

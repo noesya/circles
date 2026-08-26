@@ -47,7 +47,6 @@
 
     <div class="mb-2">
       <%= link_to 'Modifier', edit_person_path(@person), class: 'me-3' %>
-      <%= link_to 'Resynchroniser', resync_person_path(@person), method: :post, class: 'me-3' %>
       <%= link_to 'Dédoublonner', merge_person_path(@person), class: 'me-3' %>
       <%= link_to 'Masquer', hide_person_path(@person), method: :patch, class: 'text-danger' %>
     </div>

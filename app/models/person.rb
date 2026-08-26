@@ -8,10 +8,13 @@
 #  hidden     :boolean          default(FALSE), not null
 #  job_title  :string
 #  last_name  :string
+#  source     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 class Person < ApplicationRecord
+  enum :source, [ :contacts, :calendar, :mail ]
+
   has_many  :emails, dependent: :destroy
   has_many  :phones, dependent: :destroy
   has_many :google_contacts,
@@ -25,6 +28,16 @@ class Person < ApplicationRecord
 
   scope :ordered, -> { order(:last_name, :first_name)}
   scope :visible, -> { where(hidden: false) }
+
+  def self.find_or_create_by_email(*emails, first_name: nil, last_name: nil, source: nil)
+    emails = emails.flatten.compact
+    person = Email.where(value: emails).first&.person
+    return person if person
+
+    person = create(first_name: first_name, last_name: last_name, source: source)
+    emails.each { |email| person.emails.find_or_create_by(value: email) }
+    person
+  end
 
   def status
     "#{job_title} #{company}"

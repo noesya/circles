@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_25_142202) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_26_064341) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -166,6 +166,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_142202) do
     t.boolean "hidden", default: false, null: false
     t.string "job_title"
     t.string "last_name"
+    t.integer "source"
     t.datetime "updated_at", null: false
   end
 
@@ -198,9 +199,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_142202) do
     t.string "resource_name", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id", null: false
-    t.index ["person_id", "user_id"], name: "index_user_google_contacts_on_person_id_and_user_id", unique: true
     t.index ["person_id"], name: "index_user_google_contacts_on_person_id"
-    t.index ["user_id", "resource_name"], name: "index_user_google_contacts_on_user_id_and_resource_name", unique: true
     t.index ["user_id"], name: "index_user_google_contacts_on_user_id"
   end
 
@@ -211,6 +210,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_142202) do
     t.string "encrypted_password", default: "", null: false
     t.string "first_name"
     t.string "last_name"
+    t.datetime "mail_synced_at"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"

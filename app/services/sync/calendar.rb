@@ -1,18 +1,16 @@
 require 'google/apis/calendar_v3'
 
-class CalendarSync
+class Sync::Calendar < Sync::Base
   EVENT_FIELDS = 'items(id,summary,htmlLink,status,start,attendees,recurringEventId),nextPageToken'
-
-  attr_reader :user
-
-  def initialize(user)
-    @user = user
-  end
 
   def sync
     started_at = Time.current
 
-    events.each do |event|
+    log("fetching events...")
+    total = events.size
+    log("#{total} events to sync")
+
+    events.each_with_index do |event, index|
       next if event.status == "cancelled"
       next if event.recurring_event_id.present?
 
@@ -23,9 +21,12 @@ class CalendarSync
         person = find_or_create_person(attendee)
         register_interaction(person, event, occurred_at)
       end
+
+      log("#{index + 1}/#{total} processed") if (index + 1) % 100 == 0
     end
 
     user.update(calendar_synced_at: started_at)
+    log("done, #{total} events processed")
   end
 
   protected
@@ -37,14 +38,8 @@ class CalendarSync
   end
 
   def find_or_create_person(attendee)
-    Person::Email.where(value: attendee.email).first&.person || create_person(attendee)
-  end
-
-  def create_person(attendee)
     first_name, last_name = (attendee.display_name || "").strip.split(" ", 2)
-    person = Person.create(first_name: first_name, last_name: last_name)
-    person.emails.create(value: attendee.email)
-    person
+    Person.find_or_create_by_email(attendee.email, first_name: first_name, last_name: last_name, source: :calendar)
   end
 
   def register_interaction(person, event, occurred_at)
@@ -83,27 +78,7 @@ class CalendarSync
   end
 
   def calendar_service
-    unless @calendar_service
-      @calendar_service = Google::Apis::CalendarV3::CalendarService.new
-      @calendar_service.authorization = authorization
-    end
-    @calendar_service
-  end
-
-  def authorization
-    unless @authorization
-      @authorization = Google::Auth::ServiceAccountCredentials.make_creds(
-        json_key_io: StringIO.new(json_key),
-        scope: scopes
-      )
-      @authorization.sub = user.email
-      @authorization.fetch_access_token!
-    end
-    @authorization
-  end
-
-  def json_key
-    @json_key ||= Base64.decode64(ENV.fetch('GOOGLE_APPLICATION_CREDENTIALS_BASE64'))
+    @calendar_service ||= build_service(Google::Apis::CalendarV3::CalendarService)
   end
 
   def scopes

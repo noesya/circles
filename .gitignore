@@ -34,6 +34,9 @@
 /config/*.key
 /config/creds.json
 
+# Ignore db dump
+/db/latest.dump
+/db/scalingo-dump.tar.gz
 
 # Ignore env file containing credentials.
 /.env

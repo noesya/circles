@@ -11,10 +11,8 @@
 #
 # Indexes
 #
-#  index_user_google_contacts_on_person_id                  (person_id)
-#  index_user_google_contacts_on_person_id_and_user_id      (person_id,user_id) UNIQUE
-#  index_user_google_contacts_on_user_id                    (user_id)
-#  index_user_google_contacts_on_user_id_and_resource_name  (user_id,resource_name) UNIQUE
+#  index_user_google_contacts_on_person_id  (person_id)
+#  index_user_google_contacts_on_user_id    (user_id)
 #
 # Foreign Keys
 #
@@ -24,4 +22,11 @@
 class User::GoogleContact < ApplicationRecord
   belongs_to :person
   belongs_to :user
+
+  def self.find_or_register(person, user, resource_name)
+    person.google_contacts.find_or_create_by(
+      user: user,
+      resource_name: resource_name
+    )
+  end
 end

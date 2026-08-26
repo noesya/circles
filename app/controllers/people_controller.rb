@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_action :set_person, only: %i[ show edit update destroy resync hide merge merge_into ]
+  before_action :set_person, only: %i[ show edit update destroy hide merge merge_into ]
 
   def index
     @people = Person.visible.ordered.page(params[:page])
@@ -49,11 +49,6 @@ class PeopleController < ApplicationController
       format.html { redirect_to people_path, notice: "Person was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
-  end
-
-  def resync
-    PersonSyncJob.perform_later(@person)
-    redirect_back(fallback_location: @person, notice: "Resynchronisation lancée")
   end
 
   def hide
