@@ -3,10 +3,10 @@
 <h1><%= @user %></h1>
 
 <div class="my-4">
-  <%= link_to "#{@user.people_imported.count} personnes importées",
+  <%= link_to "#{@user.people_imported.visible.count} personnes importées",
               people_imported_user_path(@user), 
               class: 'me-3' %>
-  <%= link_to "#{@user.people_with_interactions.count} personnes avec des interactions",
+  <%= link_to "#{@user.people_with_interactions.visible.count} personnes avec des interactions",
               people_with_interactions_user_path(@user), 
               class: 'me-3' %>
   <%= link_to "#{@user.interactions.count} interactions",
