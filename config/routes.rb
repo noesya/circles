@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :search
+      get :please_clean
     end
     resources :interactions, only: [ :new, :create ]
   end

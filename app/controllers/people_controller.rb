@@ -5,6 +5,10 @@ class PeopleController < ApplicationController
     @people = Person.visible.ordered.page(params[:page])
   end
 
+  def please_clean
+    @people = Person.visible.dirty.ordered.page(params[:page])
+  end
+
   def show
     @interactions = @person.interactions.ordered.page(params[:page])
   end

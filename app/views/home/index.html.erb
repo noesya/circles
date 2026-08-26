@@ -16,3 +16,6 @@
 
 <h2 class="h4">Tout mon cercle</h2>
 <%= render 'people/list', people: @people %>
+
+
+<%= link_to t('please_clean_us'), please_clean_people_path if @needs_cleaning %>

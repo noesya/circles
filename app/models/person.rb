@@ -35,6 +35,7 @@ class Person < ApplicationRecord
   scope :ordered, -> { order(:last_name, :first_name)}
   scope :visible, -> { where(hidden: false) }
   scope :interaction_too_old, -> { where('last_interaction_at < ?', (Date.today - ACCEPTABLE_DELAY)) }
+  scope :dirty, -> { where(last_name: nil) }
 
   def self.find_or_create_by_email(*emails, first_name: nil, last_name: nil, source: nil)
     emails = emails.flatten.compact
