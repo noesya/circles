@@ -4,12 +4,6 @@ require 'open-uri'
 class Sync::People < Sync::Base
   PERSON_FIELDS = 'names,emailAddresses,phoneNumbers,photos,organizations'
 
-  def self.resync_person(person)
-    person.google_contacts.any? do |google_contact|
-      new(google_contact.user).resync_person(person)
-    end
-  end
-
   def sync
     log("fetching contacts...")
     total = people.size
@@ -33,16 +27,6 @@ class Sync::People < Sync::Base
     end
 
     log("done, #{total} contacts processed")
-  end
-
-  def resync_person(person)
-    contact = person.google_contacts.find_by!(user: user)
-    google_person = fetch_person(contact.resource_name)
-    return false if google_person.nil?
-    sync_organization(person, google_person)
-    sync_emails(person, google_person)
-    sync_phones(person, google_person)
-    true
   end
 
   protected

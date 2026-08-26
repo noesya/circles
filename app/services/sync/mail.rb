@@ -2,7 +2,7 @@ require 'google/apis/gmail_v1'
 
 class Sync::Mail < Sync::Base
   MESSAGE_FIELDS = 'id,internalDate,payload/headers'
-  METADATA_HEADERS = %w[From To Cc Subject]
+  METADATA_HEADERS = %w[To Cc Subject]
   EMAIL_REGEXP = /[\w.+-]+@[\w-]+\.[\w.-]+/
 
   def sync
@@ -34,13 +34,13 @@ class Sync::Mail < Sync::Base
   protected
 
   def query
-    parts = [ '-in:chats' ]
+    parts = [ 'in:sent', '-in:chats' ]
     parts << "after:#{user.mail_synced_at.to_i}" if user.mail_synced_at.present?
     parts.join(' ')
   end
 
   def correspondents(message)
-    emails = %w[From To Cc].flat_map { |name| header(message, name).to_s.scan(EMAIL_REGEXP) }
+    emails = %w[To Cc].flat_map { |name| header(message, name).to_s.scan(EMAIL_REGEXP) }
     emails.map(&:downcase).uniq.reject { |email| internal?(email) }
   end
 
