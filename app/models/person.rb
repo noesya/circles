@@ -18,17 +18,17 @@ class Person < ApplicationRecord
 
   enum :source, [ :contacts, :calendar, :mail ]
 
+  has_one   :user
   has_many  :emails, dependent: :destroy
   has_many  :phones, dependent: :destroy
-  has_many :google_contacts,
+  has_many  :interactions, dependent: :destroy
+  has_many  :google_contacts,
             class_name: 'User::GoogleContact',
             dependent: :destroy
-  has_many :interactions, dependent: :destroy
-  has_one :user
-  has_one_attached :avatar
-
   has_and_belongs_to_many :in_users_circles,
                           class_name: 'User'
+
+  has_one_attached :avatar
 
   after_save :connect_user
 
