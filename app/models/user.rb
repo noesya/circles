@@ -14,17 +14,25 @@
 #  reset_password_token   :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  person_id              :uuid
 #
 # Indexes
 #
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_person_id             (person_id)
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (person_id => people.id)
 #
 class User < ApplicationRecord
   devise  :database_authenticatable,
           :rememberable,
           :omniauthable,
           omniauth_providers: [:saml]
+
+  belongs_to :person, optional: true
 
   has_and_belongs_to_many :people_in_circle,
                           class_name: 'Person',

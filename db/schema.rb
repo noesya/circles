@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_26_064341) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_26_090132) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -165,6 +165,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_064341) do
     t.string "first_name"
     t.boolean "hidden", default: false, null: false
     t.string "job_title"
+    t.datetime "last_interaction_at"
     t.string "last_name"
     t.integer "source"
     t.datetime "updated_at", null: false
@@ -211,11 +212,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_064341) do
     t.string "first_name"
     t.string "last_name"
     t.datetime "mail_synced_at"
+    t.uuid "person_id"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["person_id"], name: "index_users_on_person_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -227,4 +230,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_064341) do
   add_foreign_key "person_phones", "people"
   add_foreign_key "user_google_contacts", "people"
   add_foreign_key "user_google_contacts", "users"
+  add_foreign_key "users", "people"
 end

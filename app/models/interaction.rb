@@ -27,13 +27,21 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Interaction < ApplicationRecord
-  enum :kind, [ :call, :calendar_event, :email ]
+  ICONS = {
+    call: 'telephone-fill',
+    calendar_event: 'calendar-event-fill',
+    email: 'envelope-fill'
+  }
+
+  enum :kind, [:call, :calendar_event, :email]
 
   belongs_to :person
   belongs_to :user
 
   validates :kind, presence: true
   validates :occurred_at, presence: true
+
+  after_save :update_person_last_interacted_at
 
   scope :ordered, -> { order(occurred_at: :desc) }
 
@@ -43,5 +51,17 @@ class Interaction < ApplicationRecord
 
   def kind_label
     I18n.t(kind, scope: "activerecord.values.interaction.kind")
+  end
+
+  def to_s
+    "#{title}"
+  end
+
+  protected
+
+  def update_person_last_interacted_at
+    if person.last_interaction_at.nil? || occurred_at > person.last_interaction_at
+      person.update_column :last_interaction_at, occurred_at
+    end
   end
 end

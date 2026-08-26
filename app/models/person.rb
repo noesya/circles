@@ -2,17 +2,20 @@
 #
 # Table name: people
 #
-#  id         :uuid             not null, primary key
-#  company    :string
-#  first_name :string
-#  hidden     :boolean          default(FALSE), not null
-#  job_title  :string
-#  last_name  :string
-#  source     :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id                  :uuid             not null, primary key
+#  company             :string
+#  first_name          :string
+#  hidden              :boolean          default(FALSE), not null
+#  job_title           :string
+#  last_interaction_at :datetime
+#  last_name           :string
+#  source              :integer
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #
 class Person < ApplicationRecord
+  ACCEPTABLE_DELAY = 6.months
+
   enum :source, [ :contacts, :calendar, :mail ]
 
   has_many  :emails, dependent: :destroy
@@ -21,13 +24,17 @@ class Person < ApplicationRecord
             class_name: 'User::GoogleContact',
             dependent: :destroy
   has_many :interactions, dependent: :destroy
+  has_one :user
   has_one_attached :avatar
 
   has_and_belongs_to_many :in_users_circles,
                           class_name: 'User'
 
+  after_save :connect_user
+
   scope :ordered, -> { order(:last_name, :first_name)}
   scope :visible, -> { where(hidden: false) }
+  scope :interaction_too_old, -> { where('last_interaction_at < ?', (Date.today - ACCEPTABLE_DELAY)) }
 
   def self.find_or_create_by_email(*emails, first_name: nil, last_name: nil, source: nil)
     emails = emails.flatten.compact
@@ -43,7 +50,20 @@ class Person < ApplicationRecord
     "#{job_title} #{company}"
   end
 
+  def email
+    emails.first.value
+  end
+
   def to_s
-    "#{first_name} #{last_name}"
+    first_name.present? ? "#{first_name} #{last_name}"
+                        : "#{email}"
+  end
+
+  protected
+
+  def connect_user
+    user = User.where(email: emails.collect(&:value)).first
+    return if user.nil?
+    user.update(person: self)
   end
 end

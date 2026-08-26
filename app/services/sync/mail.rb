@@ -1,11 +1,6 @@
 require 'google/apis/gmail_v1'
 
 class Sync::Mail < Sync::Base
-  # Sans historique connu (premier passage), on ne remonte que sur cette
-  # fenêtre plutôt que toute la boîte mail : le volume d'un compte Gmail n'a
-  # rien à voir avec celui d'un agenda.
-  DEFAULT_LOOKBACK = 90.days
-
   MESSAGE_FIELDS = 'id,internalDate,payload/headers'
   METADATA_HEADERS = %w[From To Cc Subject]
   EMAIL_REGEXP = /[\w.+-]+@[\w-]+\.[\w.-]+/
@@ -25,6 +20,7 @@ class Sync::Mail < Sync::Base
       subject = header(message, 'Subject')
       correspondents(message).each do |email|
         person = find_or_create_person(email)
+        next if person.user.present?
         register_interaction(person, message, occurred_at, subject)
       end
 
@@ -37,12 +33,9 @@ class Sync::Mail < Sync::Base
 
   protected
 
-  # Ne garde que les mails classés par Gmail dans l'onglet "Principale" :
-  # exclut nativement newsletters, notifications automatiques, réseaux
-  # sociaux, forums... sans heuristique maison à maintenir.
   def query
-    parts = [ 'category:primary', '-in:chats' ]
-    parts << "after:#{(user.mail_synced_at || DEFAULT_LOOKBACK.ago).to_i}"
+    parts = [ '-in:chats' ]
+    parts << "after:#{user.mail_synced_at.to_i}" if user.mail_synced_at.present?
     parts.join(' ')
   end
 

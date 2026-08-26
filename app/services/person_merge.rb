@@ -8,6 +8,7 @@ class PersonMerge
     move_emails
     move_phones
     move_interactions
+    refresh_last_interaction_at
     source.destroy!
   end
 
@@ -36,5 +37,12 @@ class PersonMerge
       next if interaction.source_id.present? && existing.include?([ interaction.user_id, interaction.source_id ])
       interaction.update_column(:person_id, target.id)
     end
+  end
+
+  # update_column contourne les callbacks (after_save sur Interaction, qui
+  # maintient last_interaction_at) : on le recalcule explicitement une fois
+  # le déplacement terminé.
+  def refresh_last_interaction_at
+    target.update_column(:last_interaction_at, target.interactions.maximum(:occurred_at))
   end
 end

@@ -3,4 +3,5 @@
 <h1><%= @user %></h1>
 <h2>Interactions</h2>
 <%= render 'interactions/list',
-            interactions: @interactions %>
+            interactions: @interactions,
+            pov: :user %>

@@ -11,5 +11,8 @@
   <ul id="person-search-results" class="search__results list-unstyled"></ul>
 </div>
 
-<p>Dans votre cercle...</p>
+<h2 class="h4">Il faut renouer le lien avec...</h2>
+<%= render 'people/list', people: @people_to_contact %>
+
+<h2 class="h4">Tout mon cercle</h2>
 <%= render 'people/list', people: @people %>

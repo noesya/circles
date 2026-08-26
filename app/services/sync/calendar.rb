@@ -19,6 +19,7 @@ class Sync::Calendar < Sync::Base
 
       attendees(event).each do |attendee|
         person = find_or_create_person(attendee)
+        next if person.user.present?
         register_interaction(person, event, occurred_at)
       end
 
@@ -33,7 +34,10 @@ class Sync::Calendar < Sync::Base
 
   def attendees(event)
     (event.attendees || []).reject do |attendee|
-      attendee.email.blank? || attendee.resource || attendee.email.casecmp?(user.email)
+      attendee.email.blank? ||
+      attendee.resource ||
+      attendee.self ||
+      attendee.email.casecmp?(user.email)
     end
   end
 

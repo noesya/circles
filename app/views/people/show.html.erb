@@ -19,38 +19,44 @@
     <% end %>
   </div>
 </div>
-<div class="row mb-4">
-  <div class="offset-lg-3 col-lg-4">
-    <% if @person.emails.any? %>
-      Mail
-      <ul class="list-unstyled">
-        <% @person.emails.each do |email| %>
-          <li><%= link_to email, "mailto:#{email}" %></li>
-        <% end %>
-      </ul>
-    <% end %>
-  </div>
-  <div class="col-lg-4">
-    <% if @person.phones.any? %>
-      Tel
-      <ul class="list-unstyled">
-        <% @person.phones.each do |phone| %>
-          <li><%= link_to phone, "tel:#{phone.canonical}" %></li>
-        <% end %>
-      </ul>
-    <% end %>
-  </div>
-</div>
-
 <div class="row mb-5">
-  <div class="offset-lg-3 col-lg-4">
+  <div class="offset-lg-3 col-lg-8">
+    <% if @person.last_interaction_at %>
+      <div class="mb-4">
+        Dernière interaction il y a <%= time_ago_in_words @person.last_interaction_at %>
+      </div>
+    <% end %>
 
-    <div class="mb-2">
+    <div class="row mb-4">
+      <div class="col-lg-6">
+        <% if @person.emails.any? %>
+          <span class="text-muted">Mail</span>
+          <ul class="list-unstyled">
+            <% @person.emails.each do |email| %>
+              <li><%= link_to email, "mailto:#{email}", class: 'text-decoration-none' %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+      <div class="col-lg-6">
+        <% if @person.phones.any? %>
+          <span class="text-muted">Tel</span>
+          <ul class="list-unstyled">
+            <% @person.phones.each do |phone| %>
+              <li><%= link_to phone, "tel:#{phone.canonical}", class: 'text-decoration-none' %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mb-4">
       <%= link_to 'Modifier', edit_person_path(@person), class: 'me-3' %>
       <%= link_to 'Dédoublonner', merge_person_path(@person), class: 'me-3' %>
       <%= link_to 'Masquer', hide_person_path(@person), method: :patch, class: 'text-danger' %>
     </div>
 
+    <%= link_to @person.user, @person.user if @person.user %>
     <% if @person.google_contacts.any? %>
       <div class="small">
         <p>
@@ -66,6 +72,7 @@
 
 <%= render 'interactions/list',
             person: @person,
-            interactions: @interactions %>
+            interactions: @interactions,
+            pov: :person %>
 
 
