@@ -44,14 +44,6 @@ class Sync::Mail < Sync::Base
     emails.map(&:downcase).uniq.reject { |email| internal?(email) }
   end
 
-  def internal?(email)
-    email.end_with?("@#{organization_domain}")
-  end
-
-  def organization_domain
-    user.email.split('@').last
-  end
-
   def find_or_create_person(email)
     Person.find_or_create_by_email(email, first_name: email.split('@').first, source: :mail)
   end

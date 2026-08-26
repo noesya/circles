@@ -32,4 +32,12 @@ class Sync::Base
   def json_key
     @json_key ||= Base64.decode64(ENV.fetch('GOOGLE_APPLICATION_CREDENTIALS_BASE64'))
   end
+
+  def internal?(email)
+    email.end_with?("@#{organization_domain}")
+  end
+
+  def organization_domain
+    user.email.split('@').last
+  end
 end

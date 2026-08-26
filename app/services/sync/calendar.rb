@@ -37,7 +37,7 @@ class Sync::Calendar < Sync::Base
       attendee.email.blank? ||
       attendee.resource ||
       attendee.self ||
-      attendee.email.casecmp?(user.email)
+      internal?(attendee.email)
     end
   end
 
