@@ -19,8 +19,8 @@ class Person < ApplicationRecord
   enum :source, [ :contacts, :calendar, :mail ]
 
   has_one   :user
-  has_many  :emails, dependent: :destroy
-  has_many  :phones, dependent: :destroy
+  has_many  :emails, -> { order(:obsolete, :created_at) }, dependent: :destroy
+  has_many  :phones, -> { order(:obsolete, :created_at) }, dependent: :destroy
   has_many  :interactions, dependent: :destroy
   has_many  :google_contacts,
             class_name: 'User::GoogleContact',
