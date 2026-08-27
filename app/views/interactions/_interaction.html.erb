@@ -20,7 +20,7 @@ icon = Interaction::ICONS.fetch(interaction.kind.to_sym)
     <% elsif pov == :person %>
       avec <%= interaction.user %>
     <% end %>
-    <% if interaction.external_url.present? %>
+    <% if interaction.user == current_user && interaction.external_url.present? %>
       <%= link_to interaction.external_url, target: :_blank do %>
         <%= bootstrap_icon 'box-arrow-up-right', width: 12, height: 12 %>
       <% end %>
