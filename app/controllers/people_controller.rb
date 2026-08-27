@@ -90,7 +90,7 @@ class PeopleController < ApplicationController
 
     def person_params
       params.expect(person: [
-        :first_name, :last_name, :avatar, :company, :job_title,
+        :first_name, :last_name, :avatar, :company, :job_title, :hidden,
         emails_attributes: [[ :id, :value, :obsolete ]],
         phones_attributes: [[ :id, :value, :obsolete ]]
       ])
