@@ -25,7 +25,7 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
-        format.html { redirect_to @person, notice: "Person was successfully created." }
+        format.html { redirect_to @person, notice: 'Enregistrement effectué' }
         format.json { render :show, status: :created, location: @person }
       else
         format.html { render :new, status: :unprocessable_content }
@@ -37,7 +37,7 @@ class PeopleController < ApplicationController
   def update
     respond_to do |format|
       if @person.update(person_params)
-        format.html { redirect_to @person, notice: "Person was successfully updated.", status: :see_other }
+        format.html { redirect_to @person, notice: 'Enregistrement effectué', status: :see_other }
         format.json { render :show, status: :ok, location: @person }
       else
         format.html { render :edit, status: :unprocessable_content }
@@ -50,7 +50,7 @@ class PeopleController < ApplicationController
     @person.destroy!
 
     respond_to do |format|
-      format.html { redirect_to people_path, notice: "Person was successfully destroyed.", status: :see_other }
+      format.html { redirect_to people_path, notice: 'Enregistrement supprimé', status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -74,12 +74,12 @@ class PeopleController < ApplicationController
     target = Person.find(params.expect(:target_id))
 
     if target == @person
-      redirect_to merge_person_path(@person), alert: "Choisissez une personne différente."
+      redirect_to merge_person_path(@person), alert: 'Choisissez une personne différente'
       return
     end
 
     PersonMerge.new(@person, target).call
-    redirect_to target, notice: "Personnes fusionnées."
+    redirect_to target, notice: 'Personnes fusionnées'
   end
 
   private

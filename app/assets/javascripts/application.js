@@ -1,8 +1,10 @@
+//= require notyf/notyf.min
 //= require popper
 //= require bootstrap-sprockets
 //= require activestorage
 //= require rails-ujs
 //= require simple_form_bs5_file_input
-//= require search
-//= require merge
-//= require person_form
+//= require application/merge
+//= require application/notyf
+//= require application/person_form
+//= require application/search
