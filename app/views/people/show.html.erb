@@ -33,7 +33,10 @@
           <span class="text-muted">Mail</span>
           <ul class="list-unstyled">
             <% @person.emails.each do |email| %>
-              <li><%= link_to email, "mailto:#{email}", class: 'text-decoration-none' %></li>
+              <li>
+                <%= link_to email, "mailto:#{email}",
+                            class: (email.obsolete? ? 'text-decoration-line-through' : 'text-decoration-none') %>
+              </li>
             <% end %>
           </ul>
         <% end %>
@@ -43,7 +46,10 @@
           <span class="text-muted">Tel</span>
           <ul class="list-unstyled">
             <% @person.phones.each do |phone| %>
-              <li><%= link_to phone, "tel:#{phone.canonical}", class: 'text-decoration-none' %></li>
+              <li>
+                <%= link_to phone, "tel:#{phone.canonical}",
+                            class: (phone.obsolete? ? 'text-decoration-line-through' : 'text-decoration-none') %>
+              </li>
             <% end %>
           </ul>
         <% end %>

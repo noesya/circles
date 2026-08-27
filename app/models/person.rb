@@ -30,6 +30,9 @@ class Person < ApplicationRecord
 
   has_one_attached :avatar
 
+  accepts_nested_attributes_for :emails, reject_if: proc { |attributes| attributes['value'].blank? }
+  accepts_nested_attributes_for :phones, reject_if: proc { |attributes| attributes['value'].blank? }
+
   after_save :connect_user
 
   scope :ordered, -> { order(:last_name, :first_name)}

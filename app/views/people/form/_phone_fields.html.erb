@@ -1,0 +1,13 @@
+<div class="d-flex align-items-start gap-2 mb-2" data-nested-fields-item>
+  <%= f.input :value, label: false, placeholder: '06 12 34 56 78',
+              wrapper_html: { class: 'flex-grow-1 mb-0' },
+              input_html: { class: ('text-decoration-line-through text-muted' if f.object.obsolete?) } %>
+  <% if f.object.persisted? %>
+    <div class="form-check mt-2 text-nowrap">
+      <%= f.check_box :obsolete, class: 'form-check-input', data: { nested_obsolete_toggle: true } %>
+      <%= f.label :obsolete, 'Obsolète', class: 'form-check-label small' %>
+    </div>
+  <% else %>
+    <button type="button" class="btn btn-link text-danger p-0 mt-2" data-nested-cancel>Annuler</button>
+  <% end %>
+</div>

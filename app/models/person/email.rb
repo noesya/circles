@@ -3,6 +3,7 @@
 # Table name: person_emails
 #
 #  id         :uuid             not null, primary key
+#  obsolete   :boolean          default(FALSE), not null
 #  value      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
