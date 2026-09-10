@@ -10,6 +10,8 @@ class PeopleController < ApplicationController
   end
 
   def show
+    @emails = @person.emails.up_to_date
+    @phones = @person.phones.up_to_date
     @interactions = @person.interactions.ordered.page(params[:page])
   end
 

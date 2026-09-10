@@ -29,10 +29,10 @@
 
     <div class="row mb-4">
       <div class="col-lg-6">
-        <% if @person.emails.any? %>
+        <% if @emails.any? %>
           <span class="text-muted">Mail</span>
           <ul class="list-unstyled">
-            <% @person.emails.each do |email| %>
+            <% @emails.each do |email| %>
               <li>
                 <%= link_to email, "mailto:#{email}",
                             class: (email.obsolete? ? 'text-decoration-line-through' : 'text-decoration-none') %>
@@ -42,10 +42,10 @@
         <% end %>
       </div>
       <div class="col-lg-6">
-        <% if @person.phones.any? %>
+        <% if @phones.any? %>
           <span class="text-muted">Tel</span>
           <ul class="list-unstyled">
-            <% @person.phones.each do |phone| %>
+            <% @phones.each do |phone| %>
               <li>
                 <%= link_to phone, "tel:#{phone.canonical}",
                             class: (phone.obsolete? ? 'text-decoration-line-through' : 'text-decoration-none') %>

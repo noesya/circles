@@ -23,6 +23,8 @@ class Person::Phone < ApplicationRecord
 
   before_validation :default_canonical
 
+  scope :up_to_date, -> { where(obsolete: false) }
+
   def to_s
     "#{value}"
   end

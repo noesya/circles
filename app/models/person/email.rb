@@ -22,6 +22,8 @@ class Person::Email < ApplicationRecord
 
   normalizes :value, with: ->(value) { value.to_s.strip.downcase }
 
+  scope :up_to_date, -> { where(obsolete: false) }
+
   def to_s
     "#{value}"
   end

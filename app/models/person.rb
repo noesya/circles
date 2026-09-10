@@ -39,7 +39,11 @@ class Person < ApplicationRecord
   scope :visible, -> { where(hidden: false) }
   scope :interaction_too_old, -> { where('last_interaction_at < ?', (Date.today - ACCEPTABLE_DELAY)) }
   scope :dirty, -> { where(last_name: nil) }
-  scope :search, -> (query) { where("first_name ILIKE :q OR last_name ILIKE :q", q: "%#{query}%")}
+  scope :search, -> (query) {
+    left_joins(:emails)
+      .where("people.first_name ILIKE :q OR people.last_name ILIKE :q OR person_emails.value ILIKE :q", q: "%#{query}%")
+      .distinct
+  }
 
   def self.find_or_create_by_email(*emails, first_name: nil, last_name: nil, source: nil)
     emails = emails.flatten.compact
