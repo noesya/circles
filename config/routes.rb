@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     end
     resources :interactions, only: [ :new, :create ]
   end
+  get 'circle' => 'people#circle'
   resources :interactions, only: [ :edit, :update, :destroy ]
   resources :users, only: [:index, :show] do 
     member do

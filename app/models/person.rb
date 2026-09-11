@@ -37,6 +37,7 @@ class Person < ApplicationRecord
 
   scope :ordered, -> { order(:last_name, :first_name)}
   scope :visible, -> { where(hidden: false) }
+  scope :in_circle, -> { joins(:in_users_circles).distinct }
   scope :interaction_too_old, -> { where('last_interaction_at < ?', (Date.today - ACCEPTABLE_DELAY)) }
   scope :dirty, -> { where(last_name: nil) }
   scope :search, -> (query) {

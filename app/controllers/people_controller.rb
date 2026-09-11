@@ -9,6 +9,11 @@ class PeopleController < ApplicationController
     @people = Person.visible.dirty.ordered.page(params[:page])
   end
 
+  def circle
+    @people = Person.in_circle.ordered.page(params[:page])
+    render :index
+  end
+
   def show
     @emails = @person.emails.up_to_date
     @phones = @person.phones.up_to_date
