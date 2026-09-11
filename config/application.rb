@@ -46,6 +46,8 @@ module Circles
         authentication: :plain
     }
 
+    config.action_view.image_loading = "lazy"
+
     config.i18n.default_locale = :fr
 
     # TODO Remove when kamifusen is compatible with Vips
