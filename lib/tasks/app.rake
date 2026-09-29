@@ -1,6 +1,6 @@
 namespace :app do
   desc 'Sync'
-  task :sync do
+  task sync: :environment do
     AllUsersSyncJob.perform_later
   end
 
