@@ -8,8 +8,6 @@ class InteractionsController < ApplicationController
 
   def create
     @interaction = @person.interactions.new(interaction_params)
-    @interaction.occurred_at = DateTime.current
-
     if @interaction.save
       redirect_to @interaction.person, notice: "Interaction ajoutée."
     else
