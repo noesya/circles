@@ -11,7 +11,10 @@ class PeopleController < ApplicationController
 
   def circle
     @people = Person.in_circle.ordered.page(params[:page])
-    render :index
+    @people_total = @people.total_count
+    @people_ko = Person.in_circle.interaction_too_old.count
+    @people_ok = @people_total - @people_ko
+    @ratio = 100.0 * @people_ok / @people_total
   end
 
   def show
