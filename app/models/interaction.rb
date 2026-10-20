@@ -30,10 +30,16 @@ class Interaction < ApplicationRecord
   ICONS = {
     call: 'telephone-fill',
     calendar_event: 'calendar-event-fill',
-    email: 'envelope-fill'
+    email: 'envelope-fill',
+    irl: 'people-fill'
   }
 
-  enum :kind, [:call, :calendar_event, :email]
+  enum :kind, [
+    :call,
+    :calendar_event,
+    :email,
+    :irl
+  ]
 
   belongs_to :person
   belongs_to :user

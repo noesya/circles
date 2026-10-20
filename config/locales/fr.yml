@@ -24,6 +24,7 @@ fr:
           call: "Appel"
           calendar_event: "Rendez-vous"
           email: "Email"
+          irl: "Rencontre IRL"
   helpers:
     submit:
       create: "Enregistrer"
