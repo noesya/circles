@@ -1,5 +1,5 @@
-<% content_for :title, t('please_clean_us') %>
+<% content_for :title, t('please_clean_us', count: @people.total_count) %>
 
-<h1 class="mb-5"><%= t('please_clean_us') %></h1>
+<h1 class="mb-5"><%= t('please_clean_us', count: @people.total_count) %></h1>
 
 <%= render 'people/list', people: @people %>

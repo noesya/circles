@@ -1,5 +1,7 @@
 fr:
-  please_clean_us: Nettoyez-nous, s’il vous plaît !
+  please_clean_us:
+    one: 1 personne à nettoyer
+    other: "%{count} personnes à nettoyer"
   activerecord:
     models:
       interaction: "Interaction"

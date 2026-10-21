@@ -4,10 +4,14 @@
 
 <%= render 'people/search' %>
 
+<% if @people_to_clean.any? %>
+  <div class="mb-5">
+    <%= link_to t('please_clean_us', count: @people_to_clean.count), please_clean_people_path %>
+  </div>
+<% end %>
+
 <h2 class="h4">Il faut renouer le lien avec...</h2>
 <%= render 'people/list', people: @people_to_contact %>
 
 <h2 class="h4">Tout mon cercle</h2>
 <%= render 'people/list', people: @people %>
-
-<%= link_to t('please_clean_us'), please_clean_people_path if @needs_cleaning %>
