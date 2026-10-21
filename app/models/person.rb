@@ -36,6 +36,7 @@ class Person < ApplicationRecord
   after_save :connect_user
 
   scope :ordered, -> { order(:last_name, :first_name)}
+  scope :ordered_by_interaction, -> { order(:last_interaction_at)}
   scope :visible, -> { where(hidden: false) }
   scope :in_circle, -> { joins(:in_users_circles).distinct }
   scope :interaction_too_old, -> { where('last_interaction_at < ? OR last_interaction_at IS NULL', (Date.today - ACCEPTABLE_DELAY)) }
