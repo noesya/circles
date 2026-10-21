@@ -9,12 +9,22 @@ class PeopleController < ApplicationController
     @people = Person.visible.dirty.ordered.page(params[:page])
   end
 
-  def circle
+  def my_circle
+    @people = current_user.people_in_circle.ordered.page(params[:page])
+    @people_total = @people.total_count
+    @people_ko = current_user.people_in_circle.interaction_too_old.count
+    @people_ok = @people_total - @people_ko
+    @ratio = 100.0 * @people_ok / @people_total
+    render 'people/circle/my'
+  end
+
+  def great_circle
     @people = Person.in_circle.ordered.page(params[:page])
     @people_total = @people.total_count
     @people_ko = Person.in_circle.interaction_too_old.count
     @people_ok = @people_total - @people_ko
     @ratio = 100.0 * @people_ok / @people_total
+    render 'people/circle/great'
   end
 
   def show

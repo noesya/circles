@@ -8,7 +8,10 @@
       <% if current_user %>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <%= link_to 'Le grand cercle', circle_path, class: 'nav-link' %>
+            <%= link_to 'Mon cercle', my_circle_people_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Le grand cercle', great_circle_people_path, class: 'nav-link' %>
           </li>
           <li class="nav-item">
             <%= link_to 'Personnes', people_path, class: 'nav-link' %>

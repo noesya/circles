@@ -15,10 +15,11 @@ Rails.application.routes.draw do
     collection do
       get :search
       get :please_clean
+      get 'great-circle' => 'people#great_circle', as: :great_circle
+      get 'my-circle' => 'people#my_circle', as: :my_circle
     end
     resources :interactions, only: [ :new, :create ]
   end
-  get 'circle' => 'people#circle'
   resources :interactions, only: [ :edit, :update, :destroy ]
   resources :users, only: [:index, :show] do 
     member do
