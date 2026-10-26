@@ -31,7 +31,7 @@ class Interaction < ApplicationRecord
     call: 'telephone-fill',
     calendar_event: 'calendar-event-fill',
     email: 'envelope-fill',
-    linkedin: 'linkedin-fill',
+    linkedin: 'linkedin',
     irl: 'people-fill'
   }
 
