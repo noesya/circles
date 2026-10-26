@@ -31,6 +31,7 @@ class Interaction < ApplicationRecord
     call: 'telephone-fill',
     calendar_event: 'calendar-event-fill',
     email: 'envelope-fill',
+    linkedin: 'linkedin-fill',
     irl: 'people-fill'
   }
 
@@ -38,6 +39,7 @@ class Interaction < ApplicationRecord
     :call,
     :calendar_event,
     :email,
+    :linkedin,
     :irl
   ]
 

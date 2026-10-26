@@ -27,6 +27,7 @@ fr:
           calendar_event: "Rendez-vous"
           email: "Email"
           irl: "Rencontre IRL"
+          linkedin: "LinkedIn"
   helpers:
     submit:
       create: "Enregistrer"
